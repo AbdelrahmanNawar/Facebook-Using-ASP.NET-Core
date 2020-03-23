@@ -26,6 +26,6 @@ namespace MVCProject.ViewModels
         public int? Day { get; set; }
         public int? Month { get; set; }
         public int? Year { get; set; }
-        public int? Gender { get; set; }
+        public string Gender { get; set; }
     }
 }

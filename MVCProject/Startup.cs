@@ -33,7 +33,6 @@ namespace MVCProject
             services.AddScoped<IDataRepository<Comment, int>, CommentRepository>();
             services.AddScoped<IDataRepository<Post, int>, PostRepository>();
             services.AddScoped<IDataRepository<FriendRequest, string>, FriendRequestRepository>();
-            services.AddControllersWithViews();
             services.AddIdentity<User, IdentityRole>(options =>
             {
                 options.Password.RequiredLength = 5;
@@ -43,6 +42,7 @@ namespace MVCProject
                 options.Password.RequireLowercase = false;
                 options.Password.RequireNonAlphanumeric = false;
             }).AddEntityFrameworkStores<FacebookContext>();
+            services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

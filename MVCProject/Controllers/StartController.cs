@@ -30,6 +30,19 @@ namespace MVCProject.Controllers
         {
             if (ModelState.IsValid)
             {
+                int gender;
+                switch (model.Gender)
+                {
+                    case "Female":
+                        gender = 0;
+                        break;
+                    case "Male":
+                        gender = 1;
+                        break;
+                    default:
+                        gender = 2;
+                        break;
+                }
                 var user = new User()
                 {
                     UserFirstName = model.FirstName,
@@ -37,7 +50,7 @@ namespace MVCProject.Controllers
                     UserName = model.Email,
                     Email = model.Email,
                     UserBirthday = new DateTime(model.Year ?? 2000, model.Month ?? 1, model.Day ?? 1),
-                    UserGender = model.Gender ?? 0
+                    UserGender = gender
                 };
                 var result = await userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
