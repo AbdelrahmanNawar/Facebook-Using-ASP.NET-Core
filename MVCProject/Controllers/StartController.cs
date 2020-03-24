@@ -67,7 +67,7 @@ namespace MVCProject.Controllers
                     }
                 
             }
-            return View(model);
+            return View("Index");
         }
 
         [HttpPost]
