@@ -23,9 +23,7 @@ namespace MVCProject.ViewModels
         [Compare("Password",ErrorMessage ="Does not match the Password.")]
         public string ConfirmedPassword { get; set; }
 
-        public int? Day { get; set; }
-        public int? Month { get; set; }
-        public int? Year { get; set; }
+        public DateTime Birthday { get; set; }
         public string Gender { get; set; }
     }
 }

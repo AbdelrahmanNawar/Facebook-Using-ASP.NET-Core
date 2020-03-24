@@ -49,7 +49,7 @@ namespace MVCProject.Controllers
                     UserLastName = model.LastName,
                     UserName = model.Email,
                     Email = model.Email,
-                    UserBirthday = new DateTime(model.Year ?? 2000, model.Month ?? 1, model.Day ?? 1),
+                    UserBirthday = model.Birthday,
                     UserGender = gender
                 };
                 var result = await userManager.CreateAsync(user, model.Password);
