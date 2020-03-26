@@ -10,7 +10,7 @@ using MVCProject.Models;
 
 namespace MVCProject.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class ProfileController : Controller
     {
         private readonly IDataRepository<FriendRequest, string> friendRequestRepository;
