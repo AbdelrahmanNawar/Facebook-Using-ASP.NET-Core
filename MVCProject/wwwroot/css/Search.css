@@ -1,0 +1,27 @@
+﻿
+
+#searchButton {
+    width: 50px;
+    height: 26px;
+    background-color: #f5f6f7;
+    outline: none;
+    border: navajowhite;
+    border-radius: 0px 5px 5px 0px;
+    margin-top: 20px;
+    margin-right: 12px;
+    text-align: center;
+}
+
+#searchIcon {
+    color: grey;
+}
+
+#searchButton:hover {
+    background-color: #e7e8e9;
+}
+
+
+#notFoundSearchDiv p{
+    color: cornflowerblue;
+    font-size: small;
+}

@@ -1,0 +1,20 @@
+﻿.Headerfriend {
+    background-color: #dfe1ee;
+}
+
+#friendsIcon {
+    width: 30px;
+    height: 35px;
+    opacity: 0.5;
+}
+
+.Headerfriend span {
+    font-size: 25px;
+    font-family: verdana;
+    opacity: 0.5;
+}
+
+#notFoundFriendsDiv p {
+    color: cornflowerblue;
+    font-size: small;
+}

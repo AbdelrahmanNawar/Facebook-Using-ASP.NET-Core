@@ -1,0 +1,88 @@
+﻿@model IEnumerable<MVCProject.Models.User>
+
+@{
+    ViewData["Title"] = "Search";
+}
+
+    <div id="searchResult" class="col-6  offset-4 d-block mt-5 bg-white rounded pb-2">
+        <div class="row">
+            <h6 class="font-weight-bold ml-3 mt-3">People</h6>
+        </div>
+        @{
+            int counter = 0;
+        }
+        @if (Model.Count() == 0)
+        {
+            <div class="row ml-3 mt-2" id="notFoundSearchDiv">
+                <p>We couldn't find anything that matches the searched name.</p>
+            </div>
+        }
+        @foreach (var item in Model)
+        {
+            counter++;
+            <div class="row mt-3">
+                <div class="col-2">
+                    <img src="~/Images/prof.png" class="rounded-circle w-100 h-100" />
+                    @*<img src="@item.UserPicture" class="rounded-circle w-100 h-100" />*@
+                </div>
+                <div class="col-7">
+                    <a class="font-weight-bold" asp-controller="Users" asp-action="Details" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.UserFirstName) @Html.DisplayFor(modelItem => item.UserLastName)</a>
+                    
+                </div>
+                <div class="col-3">
+                    @{
+                        var currentUser = (User)ViewBag.CurrentUser;
+                    }
+                    @if (currentUser.FriendRequestReceivers.Any(f => f.Sender == item))
+                    {
+                        FriendRequestState tempState = currentUser.FriendRequestReceivers.SingleOrDefault(u=> u.Sender == item).State;
+                        if (tempState == FriendRequestState.Accepted)
+                        {
+                            <button class="statusButton w-100" disabled>
+                                <i class="fas fa-check statusButtonIcon"></i>
+                                Friends
+                            </button>
+                        }
+                        else if (tempState == FriendRequestState.Pending)
+                        {
+                            <button class="statusButton w-100" id="@item.Id">
+                                <i class="fas fa-user-check statusButtonIcon"></i>
+                                Respond
+                            </button>
+                        }
+                    }
+                    else if (currentUser.FriendRequestSenders.Any(f => f.Receiver == item))
+                    {
+                        FriendRequestState tempState = currentUser.FriendRequestSenders.SingleOrDefault(u=> u.Receiver == item).State;
+                        if (tempState == FriendRequestState.Accepted)
+                        {
+                            <button class="statusButton w-100" disabled>
+                                <i class="fas fa-check statusButtonIcon"></i>
+                                Friends
+                            </button>
+                        }
+                        else if (tempState == FriendRequestState.Pending)
+                        {
+                            <button class="statusButton w-100" disabled>
+                                <i class="fas fa-ellipsis-h statusButtonIcon"></i>
+                                Pending
+                            </button>
+                        }
+                    }
+                    else
+                    {
+                        <button class="statusButton w-100" id="@item.Id">
+                            <i class="fas fa-user-plus statusButtonIcon"></i>
+                            Add Friend
+                        </button>
+                    }
+
+                </div>
+            </div>
+            if (counter < Model.Count())
+            {
+                <hr />
+            }
+        }
+    </div>
+

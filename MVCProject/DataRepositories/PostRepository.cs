@@ -69,7 +69,7 @@ namespace MVCProject.DataRepositories
         {
             try
             {
-                var posts = context.Posts.ToList();
+                var posts = context.Posts.OrderBy(p => p.PostDateTime).ToList();
                 return posts;
             }
             catch (Exception e)
@@ -83,6 +83,18 @@ namespace MVCProject.DataRepositories
             try
             {
                 return context.Posts.Find(id);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public List<Post> SelectByUserId(string id)
+        {
+            try
+            {
+                return context.Posts.Where(p=>p.UserId == id).OrderBy(p=>p.PostDateTime).ToList();
             }
             catch (Exception e)
             {

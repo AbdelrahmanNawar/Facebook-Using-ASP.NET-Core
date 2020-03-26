@@ -15,6 +15,16 @@ namespace MVCProject.DataRepositories
             context = _context;
         }
 
+        public List<FriendRequest> GetFriendRequestReceivers(string userId)
+        {
+            return context.FriendRequests.Where(r => r.ReceiverId == userId).Include("Sender").Include("Receiver").ToList();
+        }
+
+        public List<FriendRequest> GetFriendRequestSenders(string userId)
+        {
+            return context.FriendRequests.Where(r => r.SenderId == userId).Include("Sender").Include("Receiver").ToList();
+        }
+
         public void Delete(string id)
         {
             try

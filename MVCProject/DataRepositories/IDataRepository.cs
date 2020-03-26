@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using MVCProject.Models;
+using System.Collections.Generic;
 
 namespace MVCProject.DataRepositories
 {
@@ -10,5 +11,9 @@ namespace MVCProject.DataRepositories
         void Update(K id, T t);
         void Delete(K id);
         bool IsExist(K id);
+        List<FriendRequest> GetFriendRequestReceivers(string userId) => null; 
+        List<FriendRequest> GetFriendRequestSenders(string userId) => null;
+        public List<Post> SelectByUserId(string id) => null;
+
     }
 }

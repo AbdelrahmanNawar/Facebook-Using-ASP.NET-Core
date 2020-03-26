@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
+using System.Security.Principal;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MVCProject.Models;
@@ -9,6 +12,7 @@ using MVCProject.ViewModels;
 
 namespace MVCProject.Controllers
 {
+    [AllowAnonymous]
     public class StartController : Controller
     {
         private readonly UserManager<User> userManager;
@@ -59,7 +63,7 @@ namespace MVCProject.Controllers
                     /// to specify weather we want to a session cookie or permenant cookie
                     /// session cookie is lost after closing the browsing window unlike the permenant cookie
                     await signInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Profile", "Profile");
                 }
                     foreach (var error in result.Errors)
                     {
@@ -76,8 +80,11 @@ namespace MVCProject.Controllers
             if (ModelState.IsValid)
             {
                 var result = await signInManager.PasswordSignInAsync(model.LoginEmail, model.LoginPassword, isPersistent: false, lockoutOnFailure: false);
-                if(result.Succeeded)
-                    return RedirectToAction("Index", "Home");
+                if (result.Succeeded)
+                {
+                    User.IsInRole("LoggedIn");
+                    return RedirectToAction("Profile", "Profile");
+                }
                     ModelState.AddModelError("","Invalid Login");
             }
             return View("Index");

@@ -64,11 +64,24 @@ namespace MVCProject.DataRepositories
             }
         }
 
+        public List<User> SelectAllWithPosts()
+        {
+            try
+            {
+                var users = context.Users.ToList();
+                return users;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
         public User SelectById(string id)
         {
             try
             {
-                return context.Users.Find(id);
+                return context.Users.Include(uPost => uPost.Posts).FirstOrDefault(u => u.Id == id);
             }
             catch (Exception e)
             {

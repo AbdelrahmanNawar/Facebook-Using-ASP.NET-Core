@@ -1,0 +1,28 @@
+﻿.HeaderAbout {
+    background-color: #dfe1ee;
+}
+
+.HeaderAbout #personImg {
+    width: 30px;
+    height: 25px;
+    opacity: 0.8;
+}
+
+.HeaderAbout span{
+    font-size: 25px; 
+    font-family: verdana;  
+    opacity: 0.5;
+}
+
+.aboutpad #femaleImg, .aboutpad #maleImg, .aboutpad #bioImg {
+    width: 20px;
+    height: 19px;
+}
+
+.aboutpad #aboutEditBtn {
+    background-color: lightgray;
+}
+
+.aboutpad #aboutUserBioEdit {
+    resize: none;
+}

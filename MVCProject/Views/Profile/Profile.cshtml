@@ -1,0 +1,217 @@
+﻿
+@model MVCProject.Models.User
+@{
+    ViewData["Title"] = "Profile";
+}
+
+
+<div class="row p-0 m-0">
+    <div class="col-lg-1"></div>
+    <div class="cover col-lg-10 col-md-12 col-sm-12 col-xs-12">
+        <div class="row" style="height: 97px;"></div>
+        <div class="row">
+            @*<form method="post" action="../Users/ProfilePic">*@
+                <div class="ProfilePicDiv col-3" style="z-index:1;">
+
+                    @{string ProfilePicture = "/Images/" + Model.UserPicture; }
+                    <img class="ProfilePic img-thumbnail" src=@ProfilePicture>
+                    @*<label class="btn btn-default btn-file mt-2 ml-5" type="submit" value="post">
+                        Upload <input type="file" style="display: none;" name="ImageFile">
+                    </label>*@
+                </div>
+                
+                @{ var name = Model.UserFirstName +" "+ Model.UserLastName;}
+                <div class="col-10 nameOfUser"> @name  </div>
+        </div>
+    </div>
+</div>
+
+<div class="row p-0 m-0">
+    <div class="col-lg-1"></div>
+    <div class="col-lg-10 col-md-12 col-sm-12 col-xs-12 pl-3">
+        <!-- hna fy bar Timline -- About -- Friends  -->
+        <div class="row barTimeline">
+            <div class="col-3"></div>
+            <div class="col-3 Timeline">
+                <a href="#" class="Timeline"> Timeline </a>
+            </div>
+            <div class="col-3 About">
+                <a href="#" class="About"> About </a>
+            </div>
+            <div class="col-3 Friends">
+                <a href="#" class="Friends"> Friends </a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="row p-0 m-0 mt-3">
+
+
+    <div class="offset-1 col-4 p-0">
+        <div class="aboutpad col-12 m-0 p-0 pb-3">
+            <partial name="About.cshtml" />
+        </div>
+
+        <div class="frnpad col-12 m-0 p-0 pb-3 mt-4" id="FriendsDiv">
+            <partial name="Friends.cshtml" />
+        </div>
+
+    </div>
+    <div class="Posts ml-3 p-0">
+        <div class="ListOfPosts row p-0 m-0">
+            <div class="createPost col-12 p-0 pb-1">
+                <h6 class="col-12 p-2 pb-3 m-0">Create Post</h6>
+                <hr class="m-0 mb-3">
+
+                <form method="post" action="../Users/Profile">
+                    <textarea id="createPostArea" cols="30" rows="10"  placeholder="What is In Your Mind ?" name="newPost"></textarea>
+                    <hr>
+                    <div class="row p-0 m-0 h-100">
+                        <div class="col-6 p-0">
+                            <label class="btn btn-default btn-file new_Btn mt-2 ml-5">
+                                Upload <input type="file" style="display: none;" name="ImageFile">
+                            </label>
+                        </div>
+                        <div class="col-6 p-0 h-100">
+                            <button type="submit" value="post" class="btn btn-Post mt-2 mr-5">Post</button>
+                        </div>
+                        @*<input id="html_btn" type='file' name="ImageFile" /><br>*@
+
+                        @*<input id="html_btn" type='file' /><br>*@
+                    </div>
+                </form>
+
+            </div>
+
+            @*<div class="createPost2 displayAcreation">
+                    <img src="~/img/prof.png" alt="" class="PrfilePic">
+                    <span class="ProfileName">Sara Atef</span><br>
+                    <span class="PostTime">1h</span>
+                    <i class="fas fa-users"></i>
+                    <Select>
+                        <option value=""></option>
+                        <option value="">Remove Post</option>
+                    </Select>
+                    <p class="PostText">
+                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nam vel autem sunt distinctio sit saepe, eius dolorum dicta
+                    </p>
+
+                    <img src="">
+                    <div class="react">
+                        <span class="Like">
+                            <i class="far fa-thumbs-up"></i>
+                            <span>Like</span>
+                        </span>
+                        <span class="Comment">
+                            <i class="far fa-comments"></i>
+                            <span>Comment</span>
+                        </span>
+                    </div>
+                    <hr>
+                    <a href="#" class="ListOfLikes">Sara Atef Liked This And 15 Other</a>
+                    <div class="comments">
+
+                        <div class="pComment">
+                            <div class="CommingComment">
+                                <img src="~/img/prof.png" alt="" class="commentPic">
+                                <textarea name="" id="" placeholder="Type Your Comment Here" class="typeComment"></textarea>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>*@
+
+
+
+            @foreach (var item in Model.Posts)
+                {
+
+        <div class="createPost2 col-12 p-0 pb-1">
+            <div class="row p-0 m-0">
+                <img src=@ProfilePicture alt="" class="PrfilePic m-2">
+                <div class="col-9 p-0">
+                    <div class="row p-0 m-0 mb-1">
+                        <span class="ProfileName">@name</span><br>
+                    </div>
+                    <div class="row p-0 m-0">
+                        @{TimeSpan time = DateTime.Now - item.PostDateTime;
+                            if (time == TimeSpan.Zero)
+                            {
+                                <span class="PostTime">now</span>
+                            }
+                            else if (time < TimeSpan.FromHours(1))
+                            {
+                                <span class="PostTime">@time.Minutes min</span>
+                            }
+                            else
+                            {
+                                <span class="PostTime">@time.Hours h</span>
+                            }
+                        }
+                        <i class="fas fa-users ml-3 mt-1"></i>
+                    </div>
+                </div>
+                <div class="postOptions col-1 p-0 ml-2">
+                    <Select>
+                        <option value=""></option>
+                        <option value="">Remove Post</option>
+                    </Select>
+                </div>
+            </div>
+
+            <div class="row p-0 m-0 mt-1">
+                <p class="PostText col-12">
+                    @item.PostContent
+                    @{string path = "/Images/" + item.PostImage; }
+                    <img src=@path alt="" class="PostImg">
+
+                </p>
+                <hr class="col-11 m-0 p-0 ml-3" />
+            </div>
+
+            <div class="row p-0 m-0 mt-3">
+                <div class="col-12">
+                    <a href="#" class="ListOfLikes">Sara Atef Liked This And 15 Other</a>
+                </div>
+                <hr class="col-11 ml-3 mt-3 p-0 m-0" />
+            </div>
+
+            <div class="row p-0 m-0">
+                <div class="Like col-6 pt-3 pb-3">
+                    <span class="row p-0 m-0">
+                        <i class="far fa-thumbs-up offset-4 col-1 p-0 mt-1"></i>
+                        <span class="col-2 p-0">Like</span>
+                    </span>
+                </div>
+                <div class="Comment col-6 pt-3 pb-3">
+                    <span class="row p-0 m-0">
+                        <i class="far fa-comments offset-4 col-1 p-0 mt-1"></i>
+                        <span class="col-2 p-0">Comment</span>
+                    </span>
+                </div>
+                <hr class="col-12 p-0 m-0">
+            </div>
+
+            <div class="row p-0 m-0 mt-3">
+                <div class="col-1">
+                    <img src=@ProfilePicture alt="" class="commentPic mt-1">
+                </div>
+                <div class="col-11 p-0">
+                    <textarea id="commentTextArea" placeholder="Type Your Comment Here" class="typeComment"></textarea>
+                </div>
+            </div>
+
+        </div>
+
+                }
+
+        </div>
+
+    </div>
+</div>
+
+
+
+
