@@ -43,12 +43,17 @@ namespace MVCProject
                 options.Password.RequireDigit = false;
                 options.Password.RequireLowercase = false;
                 options.Password.RequireNonAlphanumeric = false;
+
             }).AddEntityFrameworkStores<FacebookContext>();
             services.AddMvcCore(options =>
             {
                 options.Filters.Add(new AuthorizeFilter(new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build()));
             });
             services.AddControllersWithViews();
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Start/Index";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -75,12 +80,8 @@ namespace MVCProject
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                    name: "starter",
+                    name: "default",
                     pattern: "{controller=Start}/{action=Index}/{id?}");
-
-                //endpoints.MapControllerRoute(
-                //    name: "default",
-                //    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

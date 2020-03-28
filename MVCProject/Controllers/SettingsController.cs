@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MVCProject.DataRepositories;
@@ -10,6 +11,7 @@ using MVCProject.ViewModels;
 
 namespace MVCProject.Controllers
 {
+    [Authorize]
     public class SettingsController : Controller
     {
         private readonly SignInManager<User> signInManager;
