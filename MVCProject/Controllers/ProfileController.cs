@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MVCProject.DataRepositories;
 using MVCProject.Models;
+using MVCProject.ViewModels;
 
 namespace MVCProject.Controllers
 {
@@ -108,6 +109,18 @@ namespace MVCProject.Controllers
                 userRepository.Update(GetCurrentUser().Id, GetCurrentUser());
             }
             return RedirectToAction("Profile");
+        }
+
+        [HttpPost]
+        public IActionResult Edit(ProfileViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                GetCurrentUser().ProfileViewModel = model;
+                userRepository.Update(GetCurrentUser().Id, GetCurrentUser());
+            }
+
+            return View("Profile",GetCurrentUser());
         }
     }
 }

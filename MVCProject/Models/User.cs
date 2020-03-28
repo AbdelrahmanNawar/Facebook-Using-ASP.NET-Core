@@ -1,16 +1,18 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using MVCProject.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace MVCProject.Models
 {
-    public class User: IdentityUser
+    public class User : IdentityUser
     {
         public User()
-            :base()
+            : base()
         {
             Posts = new HashSet<Post>();
             Comments = new HashSet<Comment>();
@@ -32,10 +34,49 @@ namespace MVCProject.Models
         public bool IsDeleted { get; set; }
         public bool IsBlocked { get; set; }
 
+        [NotMapped]
+        public ProfileViewModel ProfileViewModel
+        {
+            get
+            {
+                return new ProfileViewModel()
+                {
+                    FirstName = UserFirstName,
+                    LastName = UserLastName,
+                    Gender = SetGender(UserGender),
+                    Bio = UserBio,
+                    ProfilePicture = UserPicture,
+                    Birthdate = UserBirthday
+                };
+            }
+            set
+            {
+                UserFirstName = value.FirstName ?? UserFirstName;
+                UserLastName = value.LastName ?? UserLastName;
+                UserGender = value.GetGender();
+                UserBio = value.Bio ?? UserBio;
+                UserPicture = value.ProfilePicture ?? UserPicture;
+                UserBirthday = value.Birthdate;
+            }
+        }
+
+        private string SetGender(int gender)
+        {
+            switch (gender)
+            {
+                case 0:
+                    return "Female";
+                case 1:
+                    return "Male";
+                default:
+                    return "";
+            }
+        }
+
         public virtual ICollection<Post> Posts { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<Like> Likes { get; set; }
-        public virtual ICollection<FriendRequest> FriendRequestSenders { get; set;}
+        public virtual ICollection<FriendRequest> FriendRequestSenders { get; set; }
         public virtual ICollection<FriendRequest> FriendRequestReceivers { get; set; }
     }
 }

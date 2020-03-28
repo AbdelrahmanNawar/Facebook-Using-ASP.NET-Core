@@ -1,0 +1,59 @@
+﻿@model MVCProject.ViewModels.ChangePasswordViewModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+<hr />
+<div class="row">
+    <div class="col-md-4 ChangePassword">
+        <form asp-action="Edit">
+            <div class="form-group">
+                <label asp-for="OldPassword" class="control-label">Old Password</label>
+                <input asp-for="OldPassword" type="password" class="form-control" onkeyup='' />
+                <span asp-validation-for="OldPassword" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="NewPassword" class="control-label">New Password</label>
+                <input asp-for="NewPassword" type="password" class="form-control" id="password" onkeyup='' />
+                <span asp-validation-for="NewPassword" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="ConfirmedPassword" class="control-label">Confirm Password</label>
+                <input asp-for="ConfirmedPassword" class="form-control" type="password" id="confirm_password" />
+                <span asp-validation-for="ConfirmedPassword" class="text-danger"></span>
+                <span id='message'></span>
+            </div>
+
+            <br />
+
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+<script>
+    $('#confirm_password').on('keyup', function () {
+        if ($('#password').val() == $('#confirm_password').val()) {
+            $('#message').html('Matching').css('color', 'green');
+        } else
+            $('#message').html('Not Matching').css('color', 'red');
+
+    });
+</script>
+

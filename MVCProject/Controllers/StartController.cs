@@ -23,6 +23,7 @@ namespace MVCProject.Controllers
             this.userManager = userManager;
             this.signInManager = signInManager;
         }
+
         [HttpGet]
         public IActionResult Index()
         {

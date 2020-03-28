@@ -1,5 +1,4 @@
-﻿
-@model MVCProject.Models.User
+﻿@model MVCProject.Models.User
 @{
     ViewData["Title"] = "Profile";
 }
@@ -10,14 +9,12 @@
     <div class="cover col-lg-10 col-md-12 col-sm-12 col-xs-12">
         <div class="row" style="height: 97px;"></div>
         <div class="row">
-            @*<form method="post" action="../Users/ProfilePic">*@
+
                 <div class="ProfilePicDiv col-3" style="z-index:1;">
 
-                    @{string ProfilePicture = "/Images/" + Model.UserPicture; }
+                    @{string ProfilePicture = "/Images/" + Model.UserPicture ?? ""; }
                     <img class="ProfilePic img-thumbnail" src=@ProfilePicture>
-                    @*<label class="btn btn-default btn-file mt-2 ml-5" type="submit" value="post">
-                        Upload <input type="file" style="display: none;" name="ImageFile">
-                    </label>*@
+
                 </div>
                 
                 @{ var name = Model.UserFirstName +" "+ Model.UserLastName;}
@@ -51,7 +48,7 @@
 
     <div class="offset-1 col-4 p-0">
         <div class="aboutpad col-12 m-0 p-0 pb-3">
-            <partial name="About.cshtml" />
+            <partial name="About.cshtml" model="@Model.ProfileViewModel"/>
         </div>
 
         <div class="frnpad col-12 m-0 p-0 pb-3 mt-4" id="FriendsDiv">

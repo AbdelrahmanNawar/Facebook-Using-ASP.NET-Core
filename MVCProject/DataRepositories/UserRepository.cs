@@ -89,11 +89,11 @@ namespace MVCProject.DataRepositories
             }
         }
 
-        public void Update(string id, User t)
+        public void Update(string id, User user)
         {
             try
             {
-                context.Entry(t).State = EntityState.Modified;
+                context.Entry(user).State = EntityState.Modified;
                 context.SaveChanges();
             }
             catch (Exception e)

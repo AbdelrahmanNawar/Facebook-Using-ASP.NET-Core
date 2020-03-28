@@ -40,3 +40,6 @@ $(".typeComment").keydown(function () {
 	}, 0);
 });
 
+//$('input[type=file]').change(function () {
+//	console.log(this.files[0].mozFullPath);
+//});
