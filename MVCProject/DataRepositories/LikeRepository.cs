@@ -36,6 +36,7 @@ namespace MVCProject.DataRepositories
             try
             {
                 context.Likes.Add(t);
+                context.SaveChanges();
             }
             catch (Exception e)
             {

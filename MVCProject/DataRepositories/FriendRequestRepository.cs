@@ -46,6 +46,7 @@ namespace MVCProject.DataRepositories
             try
             {
                 context.FriendRequests.Add(t);
+                context.SaveChanges();
             }
             catch (Exception e)
             {

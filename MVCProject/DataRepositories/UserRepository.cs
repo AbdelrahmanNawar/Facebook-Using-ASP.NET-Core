@@ -35,6 +35,7 @@ namespace MVCProject.DataRepositories
             try
             {
                 context.Users.Add(t);
+                context.SaveChanges();
             }
             catch (Exception e)
             {
