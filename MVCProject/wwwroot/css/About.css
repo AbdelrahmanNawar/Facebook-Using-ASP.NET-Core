@@ -23,6 +23,6 @@
     background-color: lightgray;
 }
 
-.aboutpad #aboutUserBioEdit {
+.userBio, .roleDescription {
     resize: none;
 }

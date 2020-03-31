@@ -11,7 +11,7 @@ using MVCProject.ViewModels;
 
 namespace MVCProject.Controllers
 {
-    [Authorize]
+    [Authorize()]
     public class ProfileController : Controller
     {
         private readonly IDataRepository<FriendRequest, string> friendRequestRepository;
@@ -50,6 +50,7 @@ namespace MVCProject.Controllers
         [AllowAnonymous]
         public IActionResult Search(string searchText)
         {
+            ViewBag.CurrentUser = GetCurrentUser();
             if (searchText == null || searchText == "")
             {
                 var searchList = userRepository.SelectAll();
@@ -72,7 +73,6 @@ namespace MVCProject.Controllers
                 return NotFound();
             }
             users.Remove(GetCurrentUser());
-            ViewBag.CurrentUser = GetCurrentUser();
             return View(users);
         }
 

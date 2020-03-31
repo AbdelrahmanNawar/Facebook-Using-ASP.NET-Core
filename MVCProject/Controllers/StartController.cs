@@ -98,5 +98,10 @@ namespace MVCProject.Controllers
             return View("Index");
         }
 
+        [HttpGet]
+        public IActionResult NotAuthorized()
+        {
+            return View();
+        }
     }
 }

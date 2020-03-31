@@ -1,0 +1,137 @@
+﻿* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    background: linear-gradient(to bottom right, white, #bcbdc4);
+    min-height: 4000px;
+    display: normal;
+}
+
+.profilearea a, .collectionOfNavICon a {
+    color: white;
+    text-decoration: none;
+}
+
+.searchbox {
+    width: 425px;
+    height: 26px;
+    background: white;
+    padding: 5px;
+    outline: none;
+    border: navajowhite;
+    border-radius: 5px 0px 0px 5px;
+    margin-left: 12px;
+    margin-top: 20px;
+}
+
+.PageBody {
+    margin-top: 60px;
+}
+
+.header1 {
+    position: fixed;
+    height: 60px;
+    background: #4267b2;
+    right: 0;
+    top:0;
+    left: 0;
+    color: white;
+    z-index: 7;
+    display: flex;
+}
+
+.chat-sidebarRight {
+    position: fixed;
+    height: 605px;
+    right: 0px;
+    background: #e9f0f2;
+}
+
+.profilearea {
+    margin-top: 15px;
+}
+
+.profpic {
+    height: 30px;
+    border-radius: 50%;
+}
+
+/*Rest Style*/
+.searchAndIcon, .connectionIcon {
+    width: 50%;
+    display: flex;
+}
+
+.facebookIcon {
+    padding-left: 100px;
+    padding-top: 20px;
+}
+.facebookIcon i {
+    font-size: 28px;
+}
+
+.connectionIcon .collectionOfNavICon {
+    margin-top: 20px;
+    display: flex;
+    margin-left: 20px;
+    font-family: Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: bold;
+}
+
+.collectionOfNavICon div {
+    width: 80px;
+}
+
+.collectionOfNavICon div.findf, .collectionOfNavICon div.message,
+    .collectionOfNavICon div.notification, .collectionOfNavICon div.setting {
+    width: 45px;
+}
+
+.collectionOfNavICon div i {
+    color: #333;
+    font-size: 19px;
+}
+
+.collectionOfNavICon div i:hover {
+    cursor: pointer;
+}
+
+.collectionOfNavICon a:hover {
+    cursor: pointer;
+}
+
+.friendList {
+    display: flex;
+    margin-top: 10px;
+    margin-left: 5px;
+    font-family: Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.frinedImg {
+    color: #000;
+}
+
+.frinedImg img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.friendName {
+    width: 80%;
+    color: #000;
+    margin-left: 10px;
+    padding-top: 10px;
+}
+
+.friendList:hover {
+    cursor: pointer;
+    background-color: #ebe9e9;
+}
+
+.FacebookContent {
+    font-family: verdana;
+    min-height: 1000px;
+}

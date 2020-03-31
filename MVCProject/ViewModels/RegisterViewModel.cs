@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MVCProject.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -25,5 +26,7 @@ namespace MVCProject.ViewModels
 
         public DateTime Birthday { get; set; }
         public string Gender { get; set; }
+
+        public string RoleName { get; set; }
     }
 }

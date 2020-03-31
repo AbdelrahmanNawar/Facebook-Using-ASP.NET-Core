@@ -1,20 +1,47 @@
 ﻿@model CreateRoleViewModel
 @{
     ViewData["Title"] = "Create New Role";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-<div style="margin:25px">
-    <h1>Create New Role</h1>
-    <div class="row">
-        <div class="col-md-12">
-            <form method="post">
-                <div asp-validation-summary="All" class="text-danger"></div>
+
+<div class="col-8 offset-2 bg-white rounded adminUsers mt-5 p-0 pb-5">
+    <div class="row m-0 rounded-top" id="createUserHeader">
+        <h4 class="mt-2 col-12">Create New Role</h4>
+        <hr class="p-0 m-0 col-12" />
+    </div>
+    <div class="row m-0 p-0 d-block pl-3 mt-4">
+        <form method="post" asp-action="CreateRole">
+
+            <div class="form-group row p-0 m-0 mb-3">
                 <div class="form-group">
                     <label asp-for="RoleName"></label>
                     <input asp-for="RoleName" class="form-control" />
                     <span asp-validation-for="RoleName" class="text-danger"></span>
                 </div>
-                <button type="submit" class="btn btn-primary">Create Role</button>
-            </form>
-        </div>
+            </div>
+
+            <div class="form-group row p-0 m-0 mb-3">
+                <div class="form-group">
+                    <label asp-for="Description"></label>
+                    <input asp-for="Description" class="form-control" />
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group row p-0 m-0 mt-5">
+                <input type="submit" value="Create Role" class="btn btn-primary col-2 " />
+            </div>
+
+            <div style="margin:24px" asp-validation-summary="All" class="text-danger">
+
+            </div>
+        </form>
     </div>
+
 </div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,86 @@
+﻿@model MVCProject.ViewModels.RegisterViewModel
+@inject RoleManager<Role> roleManager;
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+    <div class="col-8 offset-2 bg-white rounded adminUsers mt-5 p-0 pb-5">
+        <div class="row m-0 rounded-top" id="createUserHeader">
+            <h4 class="mt-2 col-12">Create New User</h4>
+            <hr class="p-0 m-0 col-12" />
+        </div>
+        <div class="row m-0 p-0 d-block pl-3 mt-4">
+            <form method="post" asp-action="CreateUser">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group row p-0 m-0 mb-3">
+                    <label class="control-label col-3">Email</label>
+                    <input type="email" asp-for="Email" class="form-control col-4" />
+                    <span asp-validation-for="Email" class="text-danger col-12"></span>
+                </div>
+                <div class="form-group row p-0 m-0 mb-3">
+                    <label class="control-label col-3">Password</label>
+                    <input type="password" asp-for="Password" class="form-control col-4" />
+                    <span asp-validation-for="Password" class="text-danger col-12"></span>
+                </div>
+                <div class="form-group row p-0 m-0 mb-3">
+                    <label class="control-label col-3">Confirm Password</label>
+                    <input type="password" asp-for="ConfirmedPassword" class="form-control col-4" />
+                    <span asp-validation-for="ConfirmedPassword" class="text-danger col-12"></span>
+                </div>
+                <div class="form-group row p-0 m-0 mb-3">
+                    <label class="control-label col-3">First Name</label>
+                    <input asp-for="FirstName" class="form-control col-4" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group row p-0 m-0 mb-3">
+                    <label class="control-label col-3">Last Name</label>
+                    <input asp-for="LastName" class="form-control col-4" />
+                    <span asp-validation-for="LastName" class="text-danger col-12"></span>
+                </div>
+                <div class="form-group row p-0 m-0 mb-3">
+                    <label class="control-label col-3">Birthday</label>
+                    <input type="date" asp-for="Birthday" class="form-control col-4" />
+                    <span asp-validation-for="Birthday" class="text-danger col-12"></span>
+                </div>
+                <div class="form-group row p-0 m-0 mb-3">
+                    <label class="control-label col-3">Gender</label>
+                    <div class="col-4">
+                        <input type="radio" id="male" name="UserGender" value="male" class="" />
+                        <label for="male" class="col-2">Male</label><br>
+                    </div>
+                    <div class="offset-3 col-4 ">
+                        <input type="radio" id="female" name="UserGender" value="female" class="" />
+                        <label for="female" class="col-2">Female</label>
+                    </div>
+
+                    <span asp-validation-for="Gender" class="text-danger col-12"></span>
+                </div>
+
+                <div class="form-group row p-0 m-0 mb-3">
+                    <label class="control-label col-3">Role</label>
+                    
+                    <div class="form-group col-2 p-0">
+                        <select asp-for="RoleName" class="form-control bg-success text-white rolesDropdown">
+                            @foreach (var role in roleManager.Roles)
+                            {
+                                <option>@role</option>
+                            }
+                        </select>
+                    </div>
+                    @*<span asp-validation-for="UserRole" class="text-danger col-12"></span>*@
+                </div>
+                <div class="form-group row p-0 m-0 mt-5">
+                    <input type="submit" value="Create" class="btn btn-primary col-2 " />
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

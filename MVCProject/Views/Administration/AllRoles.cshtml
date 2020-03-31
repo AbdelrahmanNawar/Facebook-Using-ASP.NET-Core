@@ -1,0 +1,54 @@
+﻿@model IEnumerable<Role>
+@{
+    ViewData["Title"] = "AllRoles";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+    <div style="margin-top:25px; margin-left:50px; margin-right:50px">
+        <h1>All Roles</h1>
+        @if (Model.Any())
+        {
+            <a class="btn btn-primary mb-3" style="width:auto"
+               asp-controller="Administration" asp-action="CreateRole">
+                Add Role
+            </a>
+            foreach (var role in Model)
+            {
+                <div class="card mb-3">
+                    <div class="card-header">
+                        Role ID: @role.Id
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            Name: @role.Name
+                        </h5>
+                        <br />
+                        <h5 class="card-title">
+                            Description: @role.Description
+                        </h5>
+                    </div>
+                    <div class="card-footer">
+                        <a asp-controller="Administration" asp-action="EditRole" asp-route-id="@role.Id" class="btn btn-primary">Edit</a>
+                        <a href="#" class="btn btn-danger">Delete</a>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="card">
+                <div class="card-header">
+                    No Roles created yet
+                </div>
+                <div class="card-body">
+                    <h5>
+                        Use the button below to create a Role
+                    </h5>
+                    <a class="btn btn-primary" style="width:auto"
+                       asp-controller="Administration" asp-action="CreateRole">
+                        Create Role
+                    </a>
+                </div>
+            </div>
+        }
+
+    </div>

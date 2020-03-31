@@ -1,0 +1,12 @@
+﻿
+@{
+    ViewData["Title"] = "NotFound";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>NotFound</h1>
+<br />
+<h1>@ViewBag.ErrorMessage</h1>
+<a asp-controller="Administration" asp-action="AllRoles">
+    Click here to navigate to the Roles
+</a>

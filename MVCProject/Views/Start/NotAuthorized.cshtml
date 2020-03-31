@@ -1,0 +1,12 @@
+﻿
+@{
+    ViewData["Title"] = "Not Authorized";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div style="margin-top:25px; margin-left:50px; margin-right:50px">
+
+    <h1 class="text-danger">Sorry you are NOT AUTHORIZED to access this page.</h1>
+    <a asp-action="Profile" asp-controller="Profile" class="fa-link">
+        Press here to get back to your profile
+    </a>
+</div>

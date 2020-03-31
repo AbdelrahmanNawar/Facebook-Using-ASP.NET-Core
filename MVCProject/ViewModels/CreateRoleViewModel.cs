@@ -10,5 +10,8 @@ namespace MVCProject.ViewModels
     {
         [Required]
         public string RoleName { get; set; }
+
+        [Required]
+        public string Description { get; set; }
     }
 }

@@ -35,7 +35,7 @@ namespace MVCProject
             services.AddScoped<IDataRepository<Comment, int>, CommentRepository>();
             services.AddScoped<IDataRepository<Post, int>, PostRepository>();
             services.AddScoped<IDataRepository<FriendRequest, string>, FriendRequestRepository>();
-            services.AddIdentity<User, IdentityRole>(options =>
+            services.AddIdentity<User, Role>(options =>
             {
                 options.Password.RequiredLength = 5;
                 options.Password.RequiredUniqueChars = 0;
@@ -53,6 +53,7 @@ namespace MVCProject
             services.ConfigureApplicationCookie(options =>
             {
                 options.LoginPath = "/Start/Index";
+                options.AccessDeniedPath = "/Start/NotAuthorized";
             });
         }
 

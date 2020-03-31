@@ -30,7 +30,6 @@ namespace MVCProject.Models
         public int UserGender { get; set; }
         public String UserBio { get; set; }
         public String UserPicture { get; set; }
-        public String UserRole { get; set; }
         public bool IsDeleted { get; set; }
         public bool IsBlocked { get; set; }
 
