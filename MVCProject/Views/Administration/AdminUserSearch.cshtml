@@ -1,64 +1,72 @@
 ﻿@model IEnumerable<MVCProject.Models.User>
 @inject RoleManager<Role> roleManager;
 @inject UserManager<User> userManager;
-@if (Model.Count() == 0)
-{
-    <div class="row ml-3 mt-5" id="notFoundSearchDiv">
-        <p class="offset-3 col-6" >We couldn't find anything that matches the searched name.</p>
-    </div>
-}
+
 @{
-    int counter = 0;
+    ViewData["Title"] = "Admin User Search";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-@foreach (var user in Model)
-{
-    counter++;
-    <div class="row p-0 m-0 mt-4">
-        <div class="col-2">
-            <img src="~/Images/prof.png" class="rounded-circle w-50 h-75" />
-            @*<img src="@item.UserPicture" class="rounded-circle w-100 h-100" />*@
+<div style="margin-top:25px; margin-left:50px; margin-right:50px">
+
+    @if (Model.Count() == 0)
+    {
+        <div class="row ml-3 mt-5" id="notFoundSearchDiv">
+            <p class="offset-3 col-6">We couldn't find anything that matches the searched name.</p>
         </div>
-        <div class="col-4">
-            <a class="font-weight-bold text-dark" asp-controller="" asp-action="" asp-route-id="@user.Id"> @user.UserFirstName @user.UserLastName</a>
-        </div>
-        <div class="col-2">
-            @if (user.IsBlocked)
-            {
-                <button class="btn btn-primary blockUserBtn" id="@user.Id">
-                    <i class="fas fa-lock-open"></i>
-                    Unblock
-                </button>
-            }
-            else
-            {
-                <button class="btn btn-danger blockUserBtn" id="@user.Id">
-                    <i class="fas fa-user-lock "></i>
-                    Block
-                </button>
-            }
-        </div>
-        <div class="col-2">
-            
-            <div class="form-group">
-                <select class="form-control bg-success text-white rolesDropdown" id="@user.Id">
-                    @*@foreach (var role in ViewBag.Roles)
-                    {
-                        if (userManager.IsInRoleAsync(user, role.Name))
+    }
+    @{
+        int counter = 0;
+    }
+    @foreach (var user in Model)
+    {
+        counter++;
+        <div class="row p-0 m-0 mt-4">
+            <div class="col-2">
+                <img src="~/Images/prof.png" class="rounded-circle w-50 h-75" />
+                @*<img src="@item.UserPicture" class="rounded-circle w-100 h-100" />*@
+            </div>
+            <div class="col-4">
+                <a class="font-weight-bold text-dark" asp-controller="" asp-action="" asp-route-id="@user.Id"> @user.UserFirstName @user.UserLastName</a>
+            </div>
+            <div class="col-2">
+                @if (user.IsBlocked)
+                {
+                    <button class="btn btn-primary blockUserBtn" id="@user.Id">
+                        <i class="fas fa-lock-open"></i>
+                        Unblock
+                    </button>
+                }
+                else
+                {
+                    <button class="btn btn-danger blockUserBtn" id="@user.Id">
+                        <i class="fas fa-user-lock "></i>
+                        Block
+                    </button>
+                }
+            </div>
+            <div class="col-2">
+
+                <div class="form-group">
+                    <select class="form-control bg-success text-white rolesDropdown" id="@user.Id" style="width:auto">
+                        @foreach (var role in roleManager.Roles)
                         {
-                            <option selected>@role</option>
+                            if (await userManager.IsInRoleAsync(user, role.Name))
+                            {
+                                <option selected>@role</option>
+                            }
+                            else
+                            {
+                                <option class="text-danger">Not in @role</option>
+                            }
                         }
-                        else
-                        {
-                            <option class="text-danger">@role</option>
-                        }
-                    }*@
-                </select>
+                    </select>
+                </div>
             </div>
         </div>
-    </div>
 
-    if (counter < Model.Count())
-    {
-        <hr class="row p-0 m-0 mt-2" />
+        if (counter < Model.Count())
+        {
+            <hr class="row p-0 m-0 mt-2" />
+        }
     }
-}
+</div>

@@ -21,7 +21,7 @@
 <body>
 
     <div class="header1 row m-0 p-0">
-        <form method="get" id="searchForm" action="../Profile/Search" class="searchAndIcon">
+        <form method="get" id="searchForm" asp-controller="Administration" asp-action="AdminUserSearch" class="searchAndIcon">
             <div id="" class="facebookIcon">
                 <i class="fab fa-facebook-square"></i>
             </div>
@@ -35,7 +35,7 @@
 
         <div class="connectionIcon">
             <div id="" class="profilearea">
-                <a href="#">
+                <a asp-controller="Profile" asp-action="Profile" >
                     <img src="~/Images/prof.png" class="profpic" />
                     @*<img src="@ViewBag.User.UserPicture" class="profpic" />*@
                 </a>

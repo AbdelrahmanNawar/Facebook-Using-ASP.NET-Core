@@ -51,7 +51,7 @@ namespace MVCProject.Controllers
         [HttpGet]
         public IActionResult AllUsers()
         {
-            var usersList = userRepository.SelectAll();
+            var usersList = userManager.Users.ToList();
             usersList.Remove(GetCurrentUser());
             ViewBag.User = GetCurrentUser();
             return View(usersList);
@@ -81,7 +81,7 @@ namespace MVCProject.Controllers
                 RoleName = role.Name,
                 Description = role.Description
             };
-            foreach (var user in userRepository.SelectAll())
+            foreach (var user in userManager.Users)
             {
                 if (await userManager.IsInRoleAsync(user, role.Name))
                 {
@@ -133,7 +133,7 @@ namespace MVCProject.Controllers
                 return View("NotFound");
             }
             var model = new List<UserRoleViewModel>();
-            foreach (var user in userRepository.SelectAll())
+            foreach (var user in userManager.Users)
             {
                 var userRoleModel = new UserRoleViewModel()
                 {
@@ -224,7 +224,7 @@ namespace MVCProject.Controllers
             ViewBag.User = GetCurrentUser();
             if (searchText == null || searchText == "")
             {
-                var searchList = userRepository.SelectAll();
+                var searchList = userManager.Users.ToList();
                 searchList.Remove(GetCurrentUser());
                 return View(searchList);
             }
@@ -232,11 +232,11 @@ namespace MVCProject.Controllers
             List<User> users = null;
             if (fullname.Length == 1)
             {
-                users = userRepository.SelectAll().Where(u => u.UserFirstName.Contains(searchText) || u.UserLastName.Contains(searchText)).ToList();
+                users = userManager.Users.Where(u => u.UserFirstName.Contains(searchText) || u.UserLastName.Contains(searchText)).ToList();
             }
             else if (fullname.Length > 1)
             {
-                users = userRepository.SelectAll().Where(u => u.UserFirstName.Contains(fullname[0]) && u.UserLastName.Contains(fullname[1])).ToList();
+                users = userManager.Users.Where(u => u.UserFirstName.Contains(fullname[0]) && u.UserLastName.Contains(fullname[1])).ToList();
             }
 
             if (users == null)
