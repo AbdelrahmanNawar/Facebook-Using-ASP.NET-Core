@@ -13,7 +13,6 @@ using MVCProject.ViewModels;
 
 namespace MVCProject.Controllers
 {
-    [Authorize]
     public class HomeController : Controller
     {
         private readonly IDataRepository<FriendRequest, string> friendRequestRepository;

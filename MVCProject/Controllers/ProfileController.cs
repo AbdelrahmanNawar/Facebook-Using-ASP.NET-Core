@@ -11,7 +11,6 @@ using MVCProject.ViewModels;
 
 namespace MVCProject.Controllers
 {
-    [Authorize()]
     public class ProfileController : Controller
     {
         private readonly IDataRepository<FriendRequest, string> friendRequestRepository;
