@@ -34,11 +34,11 @@ namespace MVCProject.Models
         public bool IsBlocked { get; set; }
 
         [NotMapped]
-        public ProfileViewModel ProfileViewModel
+        public AboutViewModel AboutViewModel
         {
             get
             {
-                return new ProfileViewModel()
+                return new AboutViewModel()
                 {
                     FirstName = UserFirstName,
                     LastName = UserLastName,

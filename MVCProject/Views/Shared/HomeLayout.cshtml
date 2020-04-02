@@ -1,28 +1,22 @@
-﻿@inject SignInManager<User> signInManager;
-@{
-    var userFriends = ViewBag.UserFriends;
-}
+﻿@model HomeViewModel
+@inject SignInManager<User> signInManager;
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - MVCProject</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
     <link href="~/css/all.min.css" rel="stylesheet" />
     <link href="~/css/fontawesome.min.css" rel="stylesheet" />
-    @*<link rel="stylesheet" href="~/css/Site.css" />*@
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/css/Style.css" rel="stylesheet" />
     <link href="~/css/Search.css" rel="stylesheet" />
-    <link href="~/css/About.css" rel="stylesheet" />
-    <link href="~/css/Friends.css" rel="stylesheet" />
-    <link href="~/css/Profile.css" rel="stylesheet" />
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-
 
 </head>
-<body class="row p-0 m-0">
-    <div class="header1 col-12 p-0">
+<body>
+    <div class="header1">
         <form method="get" id="searchForm" asp-action="Profile" asp-controller="Search" class="searchAndIcon">
             <div id="" class="facebookIcon">
                 <i class="fab fa-facebook-square"></i>
@@ -47,21 +41,11 @@
 
                 <div id="" class="profilearea1"><a asp-controller="Profile" asp-action="Profile">Profile</a></div>
 
-                <div id="" class="profilearea4"><a asp-controller="Home" asp-action="Index">Home</a></div>
+                <div id="" class="profilearea4"><a href="#">Home</a></div>
 
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <form method="post" asp-action="Logout" asp-controller="Start">
-                            <button type="submit" class="nav-link btn btn-link py-0"
-                                    style="width:auto;
-                                    color:white;
-                                    font-weight:bold;
-                                    margin-right:20px">
-                                Logout @Model.User.UserFirstName @Model.User.UserLastName
-                            </button>
-                        </form>
-                    </li>
-                </ul>
+                <a asp-action="Logout" asp-controller="Start" style="margin-right:25px">
+                    Logout @Model.User.UserFirstName @Model.User.UserLastName
+                </a>
 
                 <div id="" class="findf">
                     <i class="fas fa-users"></i>
@@ -82,36 +66,40 @@
             </div>
 
         </div>
-    </div>
 
-    <div class="PageBody col-12 p-0">
-
-        <div class="FacebookContent col-10 p-0">
-            @RenderBody()
-        </div>
         <div class="chat-sidebarRight">
 
-            @foreach (var item in userFriends)
+            @foreach (var item in Model.UserFriends)
             {
                 <div class="friendList">
                     <div class="frinedImg">
                         <img src="~/Images/prof.png" alt="">
                     </div>
-                    <div class="friendName">@item.UserFirstName  @item.UserLastName</div>
+                    <div class="friendName">@item.UserFirstName  @item.UserLastName</div> 
+                    @* Link to with action calling friend profile *@
                 </div>
             }
+
         </div>
+
     </div>
 
-
+    <div class="FacebookContent">
+        @RenderBody()
+    </div>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/js/AutoTextAreaResize.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="~/js/custom.js"></script>
-    <script src="~/js/Search.js"></script>
-    <script src="~/js/Profile.js"></script>
+    <a href="~/js/bootstrap.bundle.min.js.map">~/js/bootstrap.bundle.min.js.map</a>
+    <a href="~/js/bootstrap.min.js.map">~/js/bootstrap.min.js.map</a>
+    <script src="~/js/Home.js"></script>
+
+
     @RenderSection("Scripts", required: false)
+
+
+
 </body>
 </html>

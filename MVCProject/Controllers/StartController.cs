@@ -84,14 +84,14 @@ namespace MVCProject.Controllers
                 if (result.Succeeded)
                 {
                     User.IsInRole("LoggedIn");
-                    return RedirectToAction("Profile", "Profile");
+                    return RedirectToAction("Index", "Home");
                 }
                     ModelState.AddModelError("","Invalid Login");
             }
             return View("Index");
         }
 
-        [HttpPost]
+        //[HttpPost]
         public async Task<IActionResult> Logout()
         {
             await signInManager.SignOutAsync();

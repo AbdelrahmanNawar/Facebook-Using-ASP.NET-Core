@@ -20,6 +20,7 @@ namespace MVCProject.Controllers
         private readonly SignInManager<User> signInManager;
         private readonly UserManager<User> userManager;
         private User currentUser;
+        private List<User> friendList;
 
         public ProfileController(IDataRepository<FriendRequest, string> friendRequestRepository,
                                  IDataRepository<User, string> userRepository,
@@ -47,10 +48,30 @@ namespace MVCProject.Controllers
             return currentUser;
         }
 
+        private List<User> GetFriends()
+        {
+            if (friendList == null)
+            {
+                friendList = new List<User>();
+                foreach (var friendRequest in GetCurrentUser().FriendRequestReceivers)
+                {
+                    if (friendRequest.State == FriendRequestState.Accepted)
+                        friendList.Add(friendRequest.Sender);
+                }
+                foreach (var friendRequest in GetCurrentUser().FriendRequestSenders)
+                {
+                    if (friendRequest.State == FriendRequestState.Accepted)
+                        friendList.Add(friendRequest.Receiver);
+                }
+            }
+            return friendList;
+        }
+
         [AllowAnonymous]
         public IActionResult Search(string searchText)
         {
             ViewBag.CurrentUser = GetCurrentUser();
+            ViewBag.UserFriends = GetFriends();
             if (searchText == null || searchText == "")
             {
                 var searchList = userRepository.SelectAll();
@@ -79,12 +100,14 @@ namespace MVCProject.Controllers
         [HttpGet]
         public IActionResult Profile()
         {
+            ViewBag.UserFriends = GetFriends();
             return View(GetCurrentUser());
         }
 
         [HttpPost]
         public IActionResult Profile(string newPost, string ImageFile)
         {
+            ViewBag.UserFriends = GetFriends();
             if (newPost != null || ImageFile != null)
             {
                 Post p = new Post()
@@ -103,6 +126,7 @@ namespace MVCProject.Controllers
         [HttpPost, ActionName("ProfilePic")]
         public IActionResult ProfilePic(string ImageFile)
         {
+            ViewBag.UserFriends = GetFriends();
             if (ImageFile != null)
             {
                 GetCurrentUser().UserPicture = ImageFile;
@@ -112,11 +136,12 @@ namespace MVCProject.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(ProfileViewModel model)
+        public IActionResult Edit(AboutViewModel model)
         {
+            ViewBag.UserFriends = GetFriends();
             if (ModelState.IsValid)
             {
-                GetCurrentUser().ProfileViewModel = model;
+                GetCurrentUser().AboutViewModel = model;
                 userRepository.Update(GetCurrentUser().Id, GetCurrentUser());
             }
 

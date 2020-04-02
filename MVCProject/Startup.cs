@@ -31,7 +31,7 @@ namespace MVCProject
         {
             services.AddDbContext<FacebookContext>(option => option.UseSqlServer(Configuration.GetConnectionString("MyConnection")));
             services.AddScoped<IDataRepository<User, string>, UserRepository>();
-            services.AddScoped<IDataRepository<Like, int>, LikeRepository>();
+            services.AddScoped<IDataRepository<Like, string>, LikeRepository>();
             services.AddScoped<IDataRepository<Comment, int>, CommentRepository>();
             services.AddScoped<IDataRepository<Post, int>, PostRepository>();
             services.AddScoped<IDataRepository<FriendRequest, string>, FriendRequestRepository>();

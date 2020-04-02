@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace MVCProject.ViewModels
 {
-    public class ProfileViewModel
+    public class AboutViewModel
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

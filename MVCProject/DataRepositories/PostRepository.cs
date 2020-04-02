@@ -70,7 +70,7 @@ namespace MVCProject.DataRepositories
         {
             try
             {
-                var posts = context.Posts.OrderBy(p => p.PostDateTime).ToList();
+                var posts = context.Posts.Include(p => p.Comments).Include(l => l.Likes).OrderBy(p => p.PostDateTime).ToList();
                 return posts;
             }
             catch (Exception e)
@@ -95,7 +95,7 @@ namespace MVCProject.DataRepositories
         {
             try
             {
-                return context.Posts.Where(p=>p.UserId == id).OrderBy(p=>p.PostDateTime).ToList();
+                return context.Posts.Where(p=>p.UserId == id).Include(u => u.Comments).Include(u => u.Likes).OrderBy(p=>p.PostDateTime).ToList();
             }
             catch (Exception e)
             {

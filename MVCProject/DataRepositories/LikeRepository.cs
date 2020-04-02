@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MVCProject.DataRepositories
 {
-    public class LikeRepository : IDataRepository<Like, int>
+    public class LikeRepository : IDataRepository<Like, string>
     {
         FacebookContext context;
         public LikeRepository(FacebookContext _context)
@@ -15,7 +15,7 @@ namespace MVCProject.DataRepositories
             context = _context;
         }
 
-        public void Delete(int id)
+        public void Delete(string id)
         {
             //try
             //{
@@ -57,11 +57,11 @@ namespace MVCProject.DataRepositories
             }
         }
 
-        public Like SelectById(int id)
+        public Like SelectById(string id)
         {
             try
             {
-                return context.Likes.FirstOrDefault(like => like.PostId == id);
+                return context.Likes.FirstOrDefault(like => like.UserId == id);
             }
             catch (Exception e)
             {
@@ -69,7 +69,7 @@ namespace MVCProject.DataRepositories
             }
         }
 
-        public void Update(int id, Like t)
+        public void Update(string id, Like t)
         {
             try
             {
@@ -82,11 +82,11 @@ namespace MVCProject.DataRepositories
             }
         }
 
-        public bool IsExist(int id)
+        public bool IsExist(string id)
         {
             try
             {
-                var like = context.Likes.SingleOrDefault<Like>(l => l.PostId == id);
+                var like = context.Likes.SingleOrDefault<Like>(l => l.UserId == id);
                 if (like == null)
                     return false;
                 else
@@ -95,6 +95,23 @@ namespace MVCProject.DataRepositories
             catch (Exception e)
             {
                 throw e;
+            }
+        }
+
+        public void Like(Like like)
+        {
+            var _checkFound = context.Likes.SingleOrDefault(f => f.PostId == like.PostId && f.UserId == like.UserId);
+            if (_checkFound == null)
+            {
+                Insert(like);
+            }
+            else
+            {
+                if (_checkFound.IsLiked == true)
+                    _checkFound.IsLiked = false;
+                else
+                    _checkFound.IsLiked = true;
+                context.SaveChanges();
             }
         }
     }

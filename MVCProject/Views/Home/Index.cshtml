@@ -1,8 +1,219 @@
-﻿@{
+﻿@model HomeViewModel
+@inject UserManager<User> userManager;
+@*@model IEnumerable<Post>*@
+
+@{
     ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/HomeLayout.cshtml";
+    var currentUser = await userManager.GetUserAsync(User);
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+
+<div class="LeftSideBarSetting">
+    <div id="" class="">
+        <img src="~/Images/prof.png" class="profpic" />
+        <span>Profile</span>
+    </div>
+
+    <div id="" class="">
+        <i class="fab fa-facebook-square"></i>
+        <span>News feed</span>
+    </div>
+
+    <div id="" class="">
+        <i class="fab fa-facebook-messenger"></i>
+        <span>Messages</span>
+    </div>
+
+    <div id="" class="">
+        <i class="fas fa-bell"></i>
+        <span>Events</span>
+    </div>
+
+    <div id="" class="">
+        <i class="fab fa-facebook-square"></i>
+        <span>Pages</span>
+    </div>
+
+    <div id="" class="">
+        <i class="fab fa-facebook-messenger"></i>
+        <span>GROUPS</span>
+    </div>
+
+    <div id="" class="">
+        <i class="fab fa-facebook-square"></i>
+        <span>Games</span>
+    </div>
+
+    <div id="" class="">
+        <i class="fab fa-facebook-messenger"></i>
+        <span> On this day</span>
+    </div>
+
+    <div id="" class="">
+        <i class="fab fa-facebook-messenger"></i>
+        <span>INTERESTS</span>
+    </div>
 </div>
+
+<div class="Posts">
+    <div class="ListOfPosts">
+        <div class="createPost">
+            <h6>Create Post</h6>
+            <hr>
+            <textarea name="" id="createPostArea" cols="30" rows="10" placeholder="What is In Your Mind ?"></textarea>
+            <hr>
+            <div class="new_Btn">UploadPicture</div><br>
+            <input id="html_btn" type='file' /><br>
+            <button data-UserId="@currentUser.Id"
+                    data-UserFullName='@currentUser.UserFirstName @currentUser.UserLastName'
+                    class="btn-Post">
+                Post
+            </button>
+        </div>
+
+        @foreach (var post in Model.Posts)
+        {
+            @if (post.IsDeleted == false)
+            {
+                <div class="createPost2" id="@post.PostId">
+                    <img src="~/Images/prof.png" alt="" class="PrfilePic">
+                    <span class="ProfileName">@post.User.UserFirstName @post.User.UserLastName</span><br>
+                    @{
+                        TimeSpan time = DateTime.Now - post.PostDateTime;
+                        if (time == TimeSpan.Zero)
+                        {
+                            <span class="PostTime">now</span>
+                        }
+                        else if (time < TimeSpan.FromHours(1))
+                        {
+                            <span class="PostTime">@time.Minutes m</span>
+                        }
+                        else if (time < TimeSpan.FromDays(1))
+                        {
+                            <span class="PostTime">@time.Hours h : @time.Minutes m</span>
+                        }
+                        else
+                        {
+                            <span class="PostTime">@time.Days days</span>
+                        }
+                    }
+                    <i class="fas fa-users"></i>
+
+                    @if (post.UserId == currentUser.Id)
+                    {
+                        <Select class="RemovePost">
+                            <option value=""></option>
+                            <option value="@post.PostId" class="RemovePost">Remove Post</option>
+                        </Select>
+                    }
+
+                    <p class="PostText2">
+                        @post.PostContent
+                    </p>
+
+                    <div class="react">
+
+                        @if (post.Likes.Where(l => l.IsLiked).Any(l => l.UserId == currentUser.Id))
+                        {
+                            <span class="Like" data-PostId="@post.PostId" data-UserId="@currentUser.Id" style="color:blue">
+                                <i class="far fa-thumbs-up"></i>
+                                <span class="LikeWord">Like</span>
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="Like" data-PostId="@post.PostId" data-UserId="@currentUser.Id">
+                                <i class="far fa-thumbs-up"></i>
+                                <span class="LikeWord">Like</span>
+                            </span>
+                        }
+
+                        <span class="Comment">
+                            <i class="far fa-comments"></i>
+                            <span>Comment</span>
+                        </span>
+                    </div>
+                    <hr>
+
+                    <a href="#" class="ListOfLikes" data-toggle="modal" data-target="#myModal">
+                        @if (post.Likes.Count == 0)
+                        {
+                            <span>0 Likes</span>
+                        }
+                        else if (post.Likes.Count == 1)
+                        {
+                            <span>@post.Likes.First().User.UserFirstName @post.Likes.First().User.UserLastName</span>
+                        }
+                        else
+                        {
+                            var likesCount = post.Likes.Count - 1;
+                            <span>@post.Likes.First().User.UserFirstName @post.Likes.First().User.UserLastName and @likesCount</span>
+                        }
+                    </a>
+
+                    <!-- The Modal (List OF Friends) -->
+                    <div class="modal" id="myModal">
+
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <!-- Modal body -->
+                                <div class="modal-body">
+                                    <p>People Who Liked This Post</p>
+                                    @foreach (var like in post.Likes)
+                                    {
+                                        <p>@like.User.UserFirstName @like.User.UserLastName</p>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--End Of Model (List OF Friends)-->
+
+
+                    <div class="comments">
+                        <div class="pComment">
+                            <div class="CommingComment">
+                                <img src="~/Images/prof.png" alt="" class="commentPic">
+                                <textarea name="" id="areaOfComment"
+                                          placeholder="Type Your Comment Here"
+                                          class="typeComment"
+                                          data-UserId="@currentUser.Id"
+                                          data-PostId="@post.PostId"
+                                          data-UserFullName='@currentUser.UserFirstName @currentUser.UserLastName'></textarea>
+                            </div>
+                        </div>
+
+                        @foreach (var comment in post.Comments)
+                        {
+                            @if (comment.IsDeleted == false)
+                            {
+                                <div class="commented" id="@comment.CommentId">
+                                    <img src="~/Images/prof.png" alt="" class="commentPic">
+                                    <p class="commenttext">
+                                        <span class="CommentedName">@comment.User.UserFirstName @comment.User.UserLastName</span><br>
+                                        @if (comment.UserId == currentUser.Id || post.UserId == currentUser.Id)
+                                        {
+                                            <Select class="RemoveComment">
+                                                <option value=""></option>
+                                                <option value="@comment.CommentId" class="RemoveComment">Remove Comment</option>
+                                            </Select>
+                                        }
+                                        <span class="CommentText2">@comment.CommentContent</span>
+                                    </p>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            }
+        }
+    </div>
+    <div class="FriendAcceptReject">
+
+    </div>
+</div>
+
+
+

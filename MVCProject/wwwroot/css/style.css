@@ -1,20 +1,23 @@
-﻿
-
-* {
+﻿* {
     box-sizing: border-box;
     padding: 0;
     margin: 0;
 }
 
 body {
-    background: linear-gradient(to bottom right, white, #bcbdc4);
     min-height: 4000px;
+    background: #e3e4e7;
 }
 
-.profilearea a, .collectionOfNavICon a {
+a {
     color: white;
     text-decoration: none;
 }
+
+/*.profilearea a, .collectionOfNavICon a {
+    color: white;
+    text-decoration: none;
+}*/
 
 #searchResult a {
     color: #385898;
@@ -47,8 +50,20 @@ body {
     margin-top: 60px;
 }
 
+/*.header1 {
+    position: fixed;
+    height: 60px;
+    background: #4267b2;
+    top: 0;
+    left: 0;
+    color: white;
+    z-index: 7;
+    display: flex;
+}*/
+
 .header1 {
     position: fixed;
+    width: 100%;
     height: 60px;
     background: #4267b2;
     top: 0;
@@ -58,10 +73,19 @@ body {
     display: flex;
 }
 
-.chat-sidebarRight {
+/*.chat-sidebarRight {
     position: fixed;
     height: 605px;
     right: 0px;
+    background: #e9f0f2;
+}*/
+
+.chat-sidebarRight {
+    width: 200px;
+    position: fixed;
+    height: 605px;
+    right: 0px;
+    top: 60px;
     background: #e9f0f2;
 }
 
@@ -147,10 +171,18 @@ body {
     background-color: #ebe9e9;
 }
 
+/*.FacebookContent {
+    position: absolute;
+    font-family: verdana;
+    min-height: 1000px;
+}*/
+
 .FacebookContent {
     position: absolute;
     font-family: verdana;
     min-height: 1000px;
+    width: 1140px;
+    top: 60px;
 }
 
 .LeftSideBarSetting {
@@ -194,15 +226,42 @@ body {
     margin-top: 20px;
 }
 
-.createPost {
+.ListOfPosts {
+    width: 75%;
+    float: left;
+}
+
+/*.createPost {
     background: #fff;
     border-radius: 5px;
     border: 1px solid #ccc;
     box-shadow: 2px 2px 2px #ccc, -2px -2px 2px #ccc;
     margin-bottom: 30px;
+}*/
+
+.createPost {
+    width: 80%;
+    background: #fff;
+    margin-top: 20px;
+    border-radius: 5px;
+    padding-bottom: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 2px 2px 2px #ccc, -2px -2px 2px #ccc;
+    margin-bottom: 30px;
 }
 
+/*.createPost2 {
+    background: #fff;
+    margin-top: 20px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-shadow: 2px 2px 2px #ccc, -2px -2px 2px #ccc;
+    margin-bottom: 30px;
+    padding: 20px;
+}*/
+
 .createPost2 {
+    width: 80%;
     background: #fff;
     margin-top: 20px;
     border-radius: 5px;
@@ -212,9 +271,15 @@ body {
     padding: 20px;
 }
 
+/*.createPost h6 {
+    font-size: 17px;
+    background: #eee;
+}*/
+
 .createPost h6 {
     font-size: 17px;
     background: #eee;
+    padding: 10px;
 }
 
 #createPostArea{
@@ -234,17 +299,35 @@ body {
     height: 100px;
 }
 
-.new_Btn {
+/*.new_Btn {
     border: 1px solid #ccc;
     width: 150px;
     border-radius: 20px;
     font-weight: bold;
     background: #e5e5e5;
     color: #676767;
+}*/
+
+.new_Btn {
+    border: 1px solid #ccc;
+    width: 150px;
+    padding: 10px;
+    border-radius: 20px;
+    font-weight: bold;
+    float: left;
+    background: #e5e5e5;
+    color: #676767;
+    margin-left: 10px;
 }
 
-.Posts{
+/*.Posts{
     width:48.7%;
+}*/
+
+.Posts {
+    /* background-color: lightblue; */
+    width: 920px;
+    float: right;
 }
 
 .new_Btn:hover {
@@ -256,11 +339,26 @@ body {
     float: right;
 }
 
-.btn-Post {
+/*.btn-Post {
     outline: 0;
     float: right;
     width: 100px;
     border: navajowhite;
+    border-radius: 5px;
+    font-weight: bold;
+    background-color: #4267b2;
+    color: #fff;
+}*/
+
+.btn-Post {
+    outline: 0;
+    float: right;
+    margin-right: 10px;
+    width: 100px;
+    padding: 10px;
+    border: navajowhite;
+    position: relative;
+    top: -27px;
     border-radius: 5px;
     font-weight: bold;
     background-color: #4267b2;
@@ -275,19 +373,26 @@ body {
     padding: 20px;
 }
 
+select {
+    width: 20px;
+    float: right;
+    border: none;
+    outline: 0;
+}
+
 .postOptions select {
-    /*width: 20px;*/
     float: right;
     border: none;
     outline: 0;
 }
 
 .PrfilePic {
-    width: 10%;
+    /*width: 10%;*/
+    width: 50px;
     height: 50px;
     border-radius: 50%;
-    /*margin: 12px 2px 5px 10px;
-    float: left;*/
+    margin: 12px 2px 5px 10px;
+    float: left;
 }
 
 .ProfileName {
@@ -300,9 +405,9 @@ body {
     margin-left: 10px;
 }
 
-.PostText {
+.PostText, .PostText2 {
     clear: both;
-    /**/
+    margin-bottom: 10px;
 }
 
 .PostImg {
@@ -312,13 +417,13 @@ body {
     border-radius: 2px;
 }
 
-/*.react {
+.react {
     padding: 10px;
-}*/
+}
 
-/*.Like {
+.Like {
     margin-right: 100px;
-}*/
+}
 
 .Like:hover, .Comment:hover {
     cursor: pointer;
@@ -326,35 +431,34 @@ body {
 }
 
 
-
-/*.comments {
+.comments {
     padding: 10px;
-}*/
+}
 
 .pComment {
-    /*width: 100%;*/
-    /*min-height: 50px;*/
+    width: 100%;
+    min-height: 50px;
 }
 
 .commentPic {
-    /*width: 30px;*/
+    width: 30px;
     height: 30px;
     border-radius: 50%;
-    /*float: left;
-    margin-right: 15px;*/
+    float: left;
+    margin-right: 15px;
 }
 
-/*.CommingComment {
+.CommingComment {
     margin-bottom: 10px;
     min-height: 45px;
-}*/
+}
 
 .commented {
     height: 45px;
     margin-bottom: 25px;
 }
 
-.typeComment {
+/*.typeComment {
     width: 97%;
     border-radius: 20px;
     padding: 7px 0 0 20px;
@@ -362,6 +466,14 @@ body {
     height: 40px;
     overflow: hidden;
     resize:none;
+}*/
+
+.typeComment {
+    width: 90%;
+    border-radius: 20px;
+    padding: 9px 0 0 20px;
+    outline: 0;
+    height: 33px;
 }
 
 .CommentedName {
@@ -380,17 +492,37 @@ body {
     clear: both;
 }
 
-.ListOfLikes {
+/*.ListOfLikes {
     color: grey;
 }
 .ListOfLikes:hover {
     color: grey !important;
+}*/
+
+.ListOfLikes {
+    color: #363535;
+    margin-top: 10px;
+    display: inline-block;
 }
+
 
 .RemoveComment {
     background: #e3e2e2;
     margin-top: -10px;
 }
+
 p {
     word-break: break-all;
+}
+
+.displayAcreation {
+    display: none;
+}
+
+.displayComment {
+    display: none;
+}
+
+.modal {
+    display: none;
 }
