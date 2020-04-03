@@ -252,8 +252,9 @@ namespace MVCProject.Controllers
         {
             if (id != null)
             {
-                GetCurrentUser().IsBlocked = true;
-                userRepository.Update(id, GetCurrentUser());
+                var user = userRepository.SelectById(id);
+                user.IsBlocked = true;
+                userRepository.Update(id, user);
             }
         }
 
@@ -262,8 +263,9 @@ namespace MVCProject.Controllers
         {
             if (id != null)
             {
-                GetCurrentUser().IsBlocked = false;
-                userRepository.Update(id, GetCurrentUser());
+                var user = userRepository.SelectById(id);
+                user.IsBlocked = false;
+                userRepository.Update(id, user);
             }
         }
 

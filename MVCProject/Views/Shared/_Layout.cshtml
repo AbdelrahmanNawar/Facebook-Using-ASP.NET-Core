@@ -1,6 +1,8 @@
 ﻿@inject SignInManager<User> signInManager;
+@inject UserManager<User> userManager;
 @{
-    var userFriends = ViewBag.UserFriends;
+    var currentUser = await userManager.GetUserAsync(User);
+    var userFriends = ViewBag.UserFriends?? new List<User>();
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -12,7 +14,7 @@
     <link href="~/css/all.min.css" rel="stylesheet" />
     <link href="~/css/fontawesome.min.css" rel="stylesheet" />
     @*<link rel="stylesheet" href="~/css/Site.css" />*@
-    <link href="~/css/Style.css" rel="stylesheet" />
+    <link href="~/css/styleMD.css" rel="stylesheet" />
     <link href="~/css/Search.css" rel="stylesheet" />
     <link href="~/css/About.css" rel="stylesheet" />
     <link href="~/css/Friends.css" rel="stylesheet" />
@@ -57,7 +59,7 @@
                                     color:white;
                                     font-weight:bold;
                                     margin-right:20px">
-                                Logout @Model.User.UserFirstName @Model.User.UserLastName
+                                Logout @currentUser.UserFirstName @currentUser.UserLastName
                             </button>
                         </form>
                     </li>
@@ -112,6 +114,7 @@
     <script src="~/js/custom.js"></script>
     <script src="~/js/Search.js"></script>
     <script src="~/js/Profile.js"></script>
+    <script src="~/js/profile_Post.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

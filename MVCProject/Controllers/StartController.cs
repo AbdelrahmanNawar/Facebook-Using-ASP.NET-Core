@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using MVCProject.DataRepositories;
 using MVCProject.Models;
 using MVCProject.ViewModels;
 
@@ -17,11 +18,15 @@ namespace MVCProject.Controllers
     {
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
+        private readonly IDataRepository<User, string> userRepository;
 
-        public StartController(UserManager<User> userManager, SignInManager<User> signInManager)
+        public StartController(UserManager<User> userManager,
+                               SignInManager<User> signInManager,
+                               IDataRepository<User,string> userRepository)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
+            this.userRepository = userRepository;
         }
 
         [HttpGet]
@@ -80,11 +85,11 @@ namespace MVCProject.Controllers
         {
             if (ModelState.IsValid)
             {
+
                 var result = await signInManager.PasswordSignInAsync(model.LoginEmail, model.LoginPassword, isPersistent: false, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-                    User.IsInRole("LoggedIn");
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Profile", "Profile");
                 }
                     ModelState.AddModelError("","Invalid Login");
             }

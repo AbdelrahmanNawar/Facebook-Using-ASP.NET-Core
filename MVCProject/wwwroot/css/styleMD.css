@@ -1,0 +1,394 @@
+﻿* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    background: linear-gradient(to bottom right, white, #bcbdc4);
+    min-height: 4000px;
+}
+
+.profilearea a, .collectionOfNavICon a {
+    color: white;
+    text-decoration: none;
+}
+
+#searchResult a {
+    color: #385898;
+}
+
+.statusButton {
+    height: 25px;
+    background-color: whitesmoke;
+    border: 1px solid lightgrey;
+    font-size:13px;
+}
+
+.statusButtonIcon {
+    color: gray;
+}
+
+.searchbox {
+    width: 425px;
+    height: 26px;
+    background: white;
+    padding: 5px;
+    outline: none;
+    border: navajowhite;
+    border-radius: 5px 0px 0px 5px;
+    margin-left: 12px;
+    margin-top: 20px;
+}
+
+.PageBody {
+    margin-top: 60px;
+}
+
+.header1 {
+    position: fixed;
+    height: 60px;
+    background: #4267b2;
+    top: 0;
+    left: 0;
+    color: white;
+    z-index: 7;
+    display: flex;
+}
+
+.chat-sidebarRight {
+    position: fixed;
+    height: 605px;
+    right: 0px;
+    background: #e9f0f2;
+}
+
+.profilearea {
+    margin-top: 15px;
+}
+
+.profpic {
+    height: 30px;
+    border-radius: 50%;
+}
+
+/*Rest Style*/
+.searchAndIcon, .connectionIcon {
+    width: 50%;
+    display: flex;
+}
+
+.facebookIcon {
+    padding-left: 100px;
+    padding-top: 20px;
+}
+.facebookIcon i {
+    font-size: 28px;
+}
+
+.connectionIcon .collectionOfNavICon {
+    margin-top: 20px;
+    display: flex;
+    margin-left: 20px;
+    font-family: Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: bold;
+}
+
+.collectionOfNavICon div {
+    width: 80px;
+}
+
+.collectionOfNavICon div.findf, .collectionOfNavICon div.message,
+    .collectionOfNavICon div.notification, .collectionOfNavICon div.setting {
+    width: 45px;
+}
+
+.collectionOfNavICon div i {
+    color: #333;
+    font-size: 19px;
+}
+
+.collectionOfNavICon div i:hover {
+    cursor: pointer;
+}
+
+.profilearea1:hover, .profilearea4:hover {
+    cursor: pointer;
+}
+
+.friendList {
+    display: flex;
+    margin-top: 10px;
+    margin-left: 5px;
+    font-family: Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.frinedImg {
+    color: #000;
+}
+
+.frinedImg img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.friendName {
+    width: 80%;
+    color: #000;
+    margin-left: 10px;
+    padding-top: 10px;
+}
+
+.friendList:hover {
+    cursor: pointer;
+    background-color: #ebe9e9;
+}
+
+.FacebookContent {
+    position: absolute;
+    font-family: verdana;
+    min-height: 1000px;
+}
+
+.LeftSideBarSetting {
+    width: 200px;
+    float: left;
+}
+
+.LeftSideBarSetting div {
+    height: 35px;
+    display: flex;
+    padding-left: 40px;
+}
+
+.LeftSideBarSetting div:nth-child(1) {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.LeftSideBarSetting div span {
+    margin-left: 10px;
+    color: #333;
+}
+
+.LeftSideBarSetting div:nth-child(1) span {
+    margin-left: 5px;
+    margin-top: 3px;
+    font-size: 18px;
+    color: #333;
+}
+
+.LeftSideBarSetting div:hover {
+    cursor: pointer;
+    background-color: #e9f0f2;
+}
+
+
+.FriendAcceptReject {
+    float: right;
+    width: 24%;
+    background: #ddd;
+    margin-top: 20px;
+}
+
+.createPost {
+    background: #fff;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-shadow: 2px 2px 2px #ccc, -2px -2px 2px #ccc;
+    margin-bottom: 30px;
+}
+
+.createPost2 {
+    background: #fff;
+    margin-top: 20px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-shadow: 2px 2px 2px #ccc, -2px -2px 2px #ccc;
+    margin-bottom: 30px;
+    padding: 20px;
+}
+
+.createPost h6 {
+    font-size: 17px;
+    background: #eee;
+}
+
+#createPostArea{
+    resize:none;
+}
+
+.createPost hr {
+    margin-bottom: 5px;
+}
+
+.createPost textarea {
+    outline: 0;
+    border: 0;
+    width: 100%;
+    padding: 10px;
+    border-radius: 2px;
+    height: 100px;
+}
+
+.new_Btn {
+    border: 1px solid #ccc;
+    width: 150px;
+    border-radius: 20px;
+    font-weight: bold;
+    background: #e5e5e5;
+    color: #676767;
+}
+
+.Posts{
+    width:48.7%;
+}
+
+.new_Btn:hover {
+    cursor: pointer;
+}
+
+#html_btn {
+    display: none;
+    float: right;
+}
+
+.btn-Post {
+    outline: 0;
+    float: right;
+    width: 100px;
+    border: navajowhite;
+    border-radius: 5px;
+    font-weight: bold;
+    background-color: #4267b2;
+    color: #fff;
+}
+
+.btn-Post:hover {
+    cursor: pointer;
+}
+
+.Fpost {
+    padding: 20px;
+}
+
+.postOptions select {
+    /*width: 20px;*/
+    float: right;
+    border: none;
+    outline: 0;
+}
+
+.PrfilePic {
+    width: 10%;
+    height: 50px;
+    border-radius: 50%;
+    /*margin: 12px 2px 5px 10px;
+    float: left;*/
+}
+
+.ProfileName {
+    margin: 10px 0 0 10px;
+    display: inline-block;
+}
+
+.PostTime {
+    clear: both;
+    margin-left: 10px;
+}
+
+.PostText {
+    clear: both;
+    /**/
+}
+
+.PostImg {
+    clear: both;
+    width: 100%;
+    margin-bottom: 5px;
+    border-radius: 2px;
+}
+
+/*.react {
+    padding: 10px;
+}*/
+
+/*.Like {
+    margin-right: 100px;
+}*/
+
+.Like:hover, .Comment:hover {
+    cursor: pointer;
+    background-color: lightgray;
+}
+
+
+
+/*.comments {
+    padding: 10px;
+}*/
+
+.pComment {
+    /*width: 100%;*/
+    /*min-height: 50px;*/
+}
+
+.commentPic {
+    /*width: 30px;*/
+    height: 30px;
+    border-radius: 50%;
+    /*float: left;
+    margin-right: 15px;*/
+}
+
+/*.CommingComment {
+    margin-bottom: 10px;
+    min-height: 45px;
+}*/
+
+.commented {
+    height: 45px;
+    margin-bottom: 25px;
+}
+
+.typeComment {
+    width: 97%;
+    border-radius: 20px;
+    padding: 7px 0 0 20px;
+    outline: 0;
+    height: 40px;
+    overflow: hidden;
+    resize:none;
+}
+
+.CommentedName {
+    font-weight: bold;
+}
+
+.commenttext {
+    float: right;
+    width: 440px;
+    background: #e3e2e2;
+    padding: 8px;
+    border-radius: 15px;
+}
+
+.clear {
+    clear: both;
+}
+
+.ListOfLikes {
+    color: grey;
+}
+.ListOfLikes:hover {
+    color: grey !important;
+}
+
+.RemoveComment {
+    background: #e3e2e2;
+    margin-top: -10px;
+}
+p {
+    word-break: break-all;
+}

@@ -18,6 +18,8 @@ namespace MVCProject.Controllers
         private readonly IDataRepository<Post, int> postRepository;
         private readonly SignInManager<User> signInManager;
         private readonly UserManager<User> userManager;
+        private readonly IDataRepository<Like, string> likeRepository;
+        private readonly IDataRepository<Comment, int> commentRepository;
         private User currentUser;
         private List<User> friendList;
 
@@ -25,14 +27,17 @@ namespace MVCProject.Controllers
                                  IDataRepository<User, string> userRepository,
                                  IDataRepository<Post, int> postRepository,
                                  SignInManager<User> signInManager,
-                                 UserManager<User> userManager)
+                                 UserManager<User> userManager,
+                                 IDataRepository<Like, string> likeRepository,
+                                 IDataRepository<Comment, int> commentRepository)
         {
             this.friendRequestRepository = friendRequestRepository;
             this.userRepository = userRepository;
             this.postRepository = postRepository;
             this.signInManager = signInManager;
             this.userManager = userManager;
-
+            this.likeRepository = likeRepository;
+            this.commentRepository = commentRepository;
         }
 
         private User GetCurrentUser()
@@ -99,7 +104,16 @@ namespace MVCProject.Controllers
         [HttpGet]
         public IActionResult Profile()
         {
+            if (GetCurrentUser().IsBlocked)
+                return View("Blocked");
             ViewBag.UserFriends = GetFriends();
+            User u = GetCurrentUser();
+            u.Posts = u.Posts.OrderByDescending(p => p.PostDateTime).ToList();
+            foreach (var p in u.Posts)
+            {
+                p.Likes = likeRepository.SelectAll().Where(x => x.PostId == p.PostId).ToList();
+                p.Comments = commentRepository.SelectAll().Where(x => x.PostId == p.PostId).ToList();
+            }
             return View(GetCurrentUser());
         }
 
@@ -120,6 +134,29 @@ namespace MVCProject.Controllers
                 postRepository.Insert(p);
             }
             return RedirectToAction("Profile");
+        }
+
+        [HttpPost]
+        public ActionResult ProfilePost(string newPost, string ImageFile)
+        {
+            ViewBag.UserFriends = GetFriends();
+            Post post = new Post();
+            if (newPost != null || ImageFile != null)
+            {
+                Post p = new Post()
+                {
+                    PostContent = newPost,
+                    PostDateTime = DateTime.Now,
+                    UserId = GetCurrentUser().Id,
+                    PostImage = ImageFile,
+                    IsDeleted = false
+                };
+                GetCurrentUser().Posts.Add(p);
+                postRepository.Insert(p);
+                post = p;
+            }
+            return Json(post.PostId);
+            //return RedirectToAction("Profile");
         }
 
         [HttpPost, ActionName("ProfilePic")]
@@ -144,7 +181,107 @@ namespace MVCProject.Controllers
                 userRepository.Update(GetCurrentUser().Id, GetCurrentUser());
             }
 
-            return View("Profile",GetCurrentUser());
+            return View("Profile", GetCurrentUser());
         }
+
+        public IActionResult Friend_Profile(string id)
+        {
+            ViewBag.UserFriends = GetFriends();
+            ViewBag.CurrentUser = GetCurrentUser();
+            if (!userRepository.IsExist(id))
+            {
+                return NotFound();
+            }
+
+            var user = userRepository.SelectById(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return View(user);
+        }
+        public void AddFriend(string id)
+        {
+            if (id != null)
+            {
+                var friendRequest = new FriendRequest() { SenderId = GetCurrentUser().Id, ReceiverId = id, State = FriendRequestState.Pending };
+                //_context.FriendRequests.Add(friendRequest);
+                friendRequestRepository.Insert(friendRequest);
+                //_context.SaveChanges();
+            }
+        }
+
+        public void RemoveFriend(string id)
+        {
+
+            if (id != null)
+            {
+                var friendRequest = friendRequestRepository.SelectAll().SingleOrDefault(m => (m.SenderId == GetCurrentUser().Id && m.ReceiverId == id) || (m.SenderId == id && m.ReceiverId == GetCurrentUser().Id));
+                if (friendRequest != null)
+                {
+                    friendRequestRepository.Delete(friendRequest);
+
+                }
+            }
+        }
+        public void AcceptFriend(string id)
+        {
+            if (id != null)
+            {
+                var friendRequest = friendRequestRepository.SelectAll().SingleOrDefault(m => m.SenderId == id && m.ReceiverId == GetCurrentUser().Id);
+
+                if (friendRequest != null)
+                {
+                    friendRequest.State = FriendRequestState.Accepted;
+                    friendRequestRepository.Update("", friendRequest);
+                }
+            }
+        }
+
+        [HttpPost]
+        public void Like(string UserId, int PostId)
+        {
+            Like like = new Like() { UserId = UserId, PostId = PostId, IsLiked = true };
+            likeRepository.Like(like);
+        }
+
+        [HttpPost]
+        public ActionResult RemovePost(int PostId)
+        {
+            ViewBag.UserFriends = GetFriends();
+            var result = postRepository.SelectById(PostId);
+            if (result != null)
+            {
+                result.IsDeleted = true;
+                postRepository.Update(0, result);
+            }
+
+            return Json(result.PostId);
+        }
+        [HttpPost]
+        public ActionResult AddComment(Comment c)
+        {
+
+            commentRepository.Insert(c);
+
+            return Json(c.CommentId);
+            //return PartialView("Comments");
+        }
+        [HttpPost]
+        public ActionResult RemoveComment(int CommentId)
+        {
+            ViewBag.UserFriends = GetFriends();
+            //var result = db.Comments.SingleOrDefault(Comment => Comment.CommentId == c.CommentId);
+            var result = commentRepository.SelectById(CommentId);
+            if (result != null)
+            {
+                result.IsDeleted = true;
+                commentRepository.Update(0, result);
+            }
+            return Json(result.PostId);
+        }
+
     }
 }
+

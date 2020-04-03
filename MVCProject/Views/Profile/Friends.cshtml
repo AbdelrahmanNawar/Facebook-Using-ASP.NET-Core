@@ -1,4 +1,8 @@
 ﻿@model MVCProject.Models.User
+@inject UserManager<User> userManager;
+@{
+    var currentUser = await userManager.GetUserAsync(User);
+}
 @*
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
@@ -22,7 +26,7 @@
 else
 {
     int counter = 0;
-    
+
     @foreach (var item in Model.FriendRequestSenders)
     {
         counter++;
@@ -34,14 +38,16 @@ else
                     @*<img src="@item.UserPicture" class="rounded-circle w-100 h-100" />*@
                 </div>
                 <div class="col-5">
-                    <a class="font-weight-bold text-dark" asp-controller="Users" asp-action="Details" asp-route-id="@item.ReceiverId">@Html.DisplayFor(modelItem => item.Receiver.UserFirstName) @Html.DisplayFor(modelItem => item.Receiver.UserLastName)</a>
+                    <a class="font-weight-bold text-dark" asp-controller="Profile" asp-action="Friend_Profile" asp-route-id="@item.ReceiverId">@Html.DisplayFor(modelItem => item.Receiver.UserFirstName) @Html.DisplayFor(modelItem => item.Receiver.UserLastName)</a>
                 </div>
                 <div class="col-5">
-
-                    <button class="btn btn-danger w-100 " id="@item.ReceiverId">
-                        <i class="fas fa-user-minus"></i>
-                        Unfriend
-                    </button>
+                    @if (!(currentUser.Id == item.ReceiverId))
+                    {
+                        <button class="btn btn-danger w-100 " id="@item.ReceiverId">
+                            <i class="fas fa-user-minus"></i>
+                            Unfriend
+                        </button>
+                    }
                 </div>
 
                 <hr class="col-8" />
@@ -65,22 +71,28 @@ else
                     @*<img src="@item.UserPicture" class="rounded-circle w-100 h-100" />*@
                 </div>
                 <div class="col-5 mt-2">
-                    <a class="font-weight-bold text-dark" asp-controller="Users" asp-action="Details" asp-route-id="@item.SenderId">@Html.DisplayFor(modelItem => item.Sender.UserFirstName) @Html.DisplayFor(modelItem => item.Sender.UserLastName)</a>
+                    <a class="font-weight-bold text-dark" asp-controller="Profile" asp-action="Friend_Profile" asp-route-id="@item.SenderId">@Html.DisplayFor(modelItem => item.Sender.UserFirstName) @Html.DisplayFor(modelItem => item.Sender.UserLastName)</a>
                 </div>
                 <div class="col-5">
                     @if (item.State == FriendRequestState.Accepted)
                     {
-                        <button class="btn btn-danger  w-100" id="@item.SenderId">
-                            <i class="fas fa-user-minus"></i>
-                            Unfriend
-                        </button>
+                        if (!(currentUser.Id == item.SenderId))
+                        {
+                            <button class="btn btn-danger  w-100" id="@item.SenderId">
+                                <i class="fas fa-user-minus"></i>
+                                Unfriend
+                            </button>
+                        }
                     }
                     else if (item.State == FriendRequestState.Pending)
                     {
-                        <button class="btn btn-primary w-100" id="@item.SenderId">
-                            <i class="fas fa-user-check"></i>
-                            Respond
-                        </button>
+                        if (!(currentUser.Id == item.SenderId) && !(currentUser.Id == item.ReceiverId))
+                        {
+                            <button class="btn btn-primary w-100" id="@item.SenderId">
+                                <i class="fas fa-user-check"></i>
+                                Respond
+                            </button>
+                        }
                     }
                 </div>
 

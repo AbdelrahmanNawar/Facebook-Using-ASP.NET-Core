@@ -44,6 +44,11 @@ namespace MVCProject.DataRepositories
             }
         }
 
+        public void Delete(Post t)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Insert(Post t)
         {
             try
@@ -56,7 +61,34 @@ namespace MVCProject.DataRepositories
                 throw e;
             }
         }
-
+        public void DeleteById(int id)
+        {
+            try
+            {
+                var post = context.Posts.Find(id);
+                if (post == null)
+                    return;
+                var postLikes = context.Likes.Where(l => l.PostId == id);
+                foreach (var like in postLikes)
+                {
+                    like.IsLiked = false;
+                    context.Entry(like).State = EntityState.Modified;
+                }
+                var postComments = context.Comments.Where(c => c.PostId == id);
+                foreach (var comment in postComments)
+                {
+                    comment.IsDeleted = true;
+                    context.Entry(comment).State = EntityState.Modified;
+                }
+                post.IsDeleted = true;
+                context.Entry(post).State = EntityState.Modified;
+                context.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
         public bool IsExist(int id)
         {
             var post = context.Posts.FirstOrDefault(p => p.PostId == id);

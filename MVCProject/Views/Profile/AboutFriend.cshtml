@@ -1,0 +1,161 @@
+﻿@model AboutViewModel
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+
+
+<div id="usersInfo" class="row m-0 p-0 HeaderAbout">
+    <div class="col-1">
+        <img src="~/Images/person.png" id="personImg" class="mt-2">
+    </div>
+    <div class="col-11">
+        <span>Info</span>
+    </div>
+</div>
+
+<div class="row p-0 m-0 mt-4">
+    <div class="col-1">
+        <i class="fa fa-user-circle mt-1" id=""></i>
+    </div>
+    <h5 class="col-3 text-left">Name:</h5>
+    <h5 class="col-8">@Model.FirstName @Model.LastName</h5>
+</div>
+<div class="row p-0 m-0 mt-3">
+
+    @if (@Model.GetGender() == 0)
+    {
+        <div class="col-1">
+            <img src="~/Images/Female.png" id="femaleImg" />
+        </div>
+        <h5 class="col-3 text-left">Gender:</h5>
+        <h5 class="col-8">Female</h5>
+    }
+    else if (@Model.GetGender() == 1)
+    {
+        <div class="col-1">
+            <img src="~/Images/Male.png" id="maleImg" />
+        </div>
+        <h5 class="col-3 text-left">Gender:</h5>
+        <h5 class="col-8">Male</h5>
+    }
+    else
+    {
+        @*<div class="col-1">
+                <img src="~/Images/Male.png" id="maleImg" />
+            </div>*@
+        <h5 class="col-3 text-left">Gender:</h5>
+        <h5 class="col-8">Not Added</h5>
+    }
+</div>
+<div class="row p-0 m-0 mt-3 ">
+    <div class="col-1">
+        <img src="~/Images/Bio.png" id="bioImg" />
+    </div>
+    <h5 class="col-3 text-left">Bio:</h5>
+    <h5 class="col-8">@Model.Bio</h5>
+    @*<h5 class="col-8">Hi my name is dalia alaa hassan elhefni and this is my profile so.. welcome .. if you want you can send me a message</h5>*@
+
+</div>
+<div class="row p-0 m-0 mt-3">
+    <div class="col-1">
+        <i class="fa fa-birthday-cake mt-1 " id=""></i>
+    </div>
+    <h5 class="col-3 text-left">Birthdate:</h5>
+    <h5 class="col-8">@Model.Birthdate.Day/@Model.Birthdate.Month/@Model.Birthdate.Year</h5>
+</div>
+@*<div class="row p-0 m-0 mt-5">
+    <button class="col-10 offset-1 btn" id="aboutEditBtn" data-toggle="modal" data-target="#modalCenter">
+        <i class="fa fa-user-edit"></i>
+        Edit
+    </button>
+
+</div>*@
+
+@*--------------------------------Modal--------------------------------------*@
+<div class="modal fade" id="modalCenter" tabindex="-1" role="dialog" aria-labelledby="modalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLongTitle">Edit Info</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center row">
+                <form method="post" asp-action="Edit" id="editInfoForm">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    @*<input type="hidden" asp-for="Id" />
+                        <input type="hidden" asp-for="PasswordHash" />
+                        <input type="hidden" asp-for="Email" />*@
+
+                    <div class="form-group row">
+                        <label class="col-5">First Name</label>
+                        <input asp-for="FirstName" class="form-control col-7" />
+                        @*<span asp-validation-for="UserFirstName" class="text-danger"></span>*@
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-5">Last Name</label>
+                        <input asp-for="LastName" class="form-control col-7" />
+                        @*<span asp-validation-for="UserLastName" class="text-danger row"></span>*@
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-5">Birthdate </label>
+                        @{
+                            string day = Model.Birthdate.Day.ToString();
+                            if (Model.Birthdate.Day.ToString().Length == 1)
+                            {
+                                day = $"0{Model.Birthdate.Day}";
+                            }
+                            string month = Model.Birthdate.Month.ToString();
+                            if (Model.Birthdate.Month.ToString().Length == 1)
+                            {
+                                month = $"0{Model.Birthdate.Month}";
+                            }
+                            string bdate = $"{Model.Birthdate.Year}-{month}-{day}";
+                        }
+                        <input type="date" class="form-control col-7" asp-for="Birthdate" value="@bdate" />
+                        @*<span asp-validation-for="UserBirthday" class="text-danger"></span>*@
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-5">Gender</label>
+                        @if (Model.GetGender() == 1)
+                        {
+                            <input type="radio" id="male" asp-for="Gender" value="Male" class="mt-1">
+                            <label for="male" class="col-2">Male</label><br>
+                            <input type="radio" id="female" checked asp-for="Gender" value="Female" class="offset-2 mt-1">
+                            <label for="female" class="col-2">Female</label><br>
+                        }
+                        else if (Model.GetGender() == 0)
+                        {
+                            <input type="radio" id="male" checked asp-for="Gender" value="Male" class="mt-1">
+                            <label for="male" class="col-2">Male</label><br>
+                            <input type="radio" id="female" asp-for="Gender" value="Female" class="offset-2 mt-1">
+                            <label for="female" class="col-2">Female</label><br>
+                        }
+                        else
+                        {
+                            <input type="radio" id="male" asp-for="Gender" value="Male" class="mt-1">
+                            <label for="male" class="col-2">Male</label><br>
+                            <input type="radio" id="female" asp-for="Gender" value="Female" class="offset-2 mt-1">
+                            <label for="female" class="col-2">Female</label><br>
+                        }
+                        @*<span asp-validation-for="UserGender" class="text-danger"></span>*@
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-5">Bio</label>
+                        <textarea id="aboutUserBioEdit" wrap="hard" maxlength="150" rows="7" class="col-7" asp-for="Bio">@Model.Bio</textarea>
+                        @*<span asp-validation-for="UserBio" class="text-danger"></span>*@
+                    </div>
+                </form>
+            
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                @*<button type="submit" form="editInfoForm" class="btn btn-primary" asp-controller="Profile" asp-action="Edit" asp-route-id="@Model.Id">Update</button>*@
+                @*<button type="submit" form="editInfoForm" class="btn btn-primary" asp-controller="Profile" asp-action="Edit">Update</button>*@
+            </div>
+        </div>
+    </div>
+</div>
+

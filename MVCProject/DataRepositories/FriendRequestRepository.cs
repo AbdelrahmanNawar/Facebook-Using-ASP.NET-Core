@@ -40,6 +40,21 @@ namespace MVCProject.DataRepositories
                 throw e;
             }
         }
+        public void DeleteById(string id)
+        {
+            try
+            {
+                var friendRequest = context.FriendRequests.Find(id);
+                if (friendRequest == null)
+                    return;
+                context.Remove(friendRequest);
+                context.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
 
         public void Insert(FriendRequest t)
         {
@@ -93,6 +108,19 @@ namespace MVCProject.DataRepositories
             try
             {
                 context.Entry(t).State = EntityState.Modified;
+                context.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public void Delete(FriendRequest t)
+        {
+            try
+            {
+                context.FriendRequests.Remove(t);
                 context.SaveChanges();
             }
             catch (Exception e)

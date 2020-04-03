@@ -30,6 +30,11 @@ namespace MVCProject.DataRepositories
             }
         }
 
+        public void Delete(Comment t)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Insert(Comment t)
         {
             try

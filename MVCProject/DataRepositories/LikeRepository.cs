@@ -69,6 +69,18 @@ namespace MVCProject.DataRepositories
             }
         }
 
+        public Like SelectById(int id)
+        {
+            try
+            {
+                return context.Likes.FirstOrDefault(like => like.PostId == id);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
         public void Update(string id, Like t)
         {
             try
@@ -113,6 +125,21 @@ namespace MVCProject.DataRepositories
                     _checkFound.IsLiked = true;
                 context.SaveChanges();
             }
+        }
+        public Like SelectLike(string userId, int postId)
+        {
+            try
+            {
+                return context.Likes.FirstOrDefault(like => like.PostId == postId && like.UserId == userId);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        public void Delete(Like t)
+        {
+            throw new NotImplementedException();
         }
     }
 }

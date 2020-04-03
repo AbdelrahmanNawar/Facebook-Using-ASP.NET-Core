@@ -2,7 +2,7 @@
     if (e.target.innerText.includes("Un")) {
         $.ajax({
             type: "GET",
-            url: `../Users/Unblock/${e.target.id}`,
+            url: `../Administration/Unblock/${e.target.id}`,
             success: function () {
                 e.target.innerHTML = "";
                 e.target.classList.remove("btn-primary");
@@ -17,7 +17,7 @@
     else {
         $.ajax({
             type: "GET",
-            url: `../Users/Block/${e.target.id}`,
+            url: `../Administration/Block/${e.target.id}`,
             success: function () {
                 e.target.innerHTML = "";
                 e.target.classList.remove("btn-danger");
@@ -36,7 +36,7 @@ $('.rolesDropdown').on('change', function (e) {
     var role = e.target.options[e.target.options.selectedIndex].value;
     $.ajax({
         type: "POST",
-        url: `../Users/ChangeRole/${e.target.id}`,
+        url: `../Administration/ChangeRole/${e.target.id}`,
         data: { role: role },
         dataType: "text",
         success: function () {
@@ -52,7 +52,7 @@ $('#adminSearchText').keydown(function (e) {
     if (e.key === "Enter") {
         $.ajax({
             type: "POST",
-            url: `../Users/AdminUserSearch`,
+            url: `../Administration/AdminUserSearch`,
             data: { searchText: e.target.value },
             dataType: "text",
             success: function (data) {

@@ -13,7 +13,9 @@ namespace MVCProject.DataRepositories
         bool IsExist(K id);
         List<FriendRequest> GetFriendRequestReceivers(string userId) => null;
         List<FriendRequest> GetFriendRequestSenders(string userId) => null;
-        public List<Post> SelectByUserId(string id) => null;
-        void Like(T t) {}
+        List<Post> SelectByUserId(string id) => null;
+        void Like(T t) { }
+        void Delete(T t);
+        Like SelectLike(string userId, K postId) => null;
     }
 }

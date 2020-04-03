@@ -10,15 +10,15 @@
         <div class="row" style="height: 97px;"></div>
         <div class="row">
 
-                <div class="ProfilePicDiv col-3" style="z-index:1;">
+            <div class="ProfilePicDiv col-3" style="z-index:1;">
 
-                    @{string ProfilePicture = "/Images/" + Model.UserPicture ?? ""; }
-                    <img class="ProfilePic img-thumbnail" src=@ProfilePicture>
+                @{string ProfilePicture = "/Images/" + Model.UserPicture ?? ""; }
+                <img class="ProfilePic img-thumbnail" src=@ProfilePicture>
 
-                </div>
-                
-                @{ var name = Model.UserFirstName +" "+ Model.UserLastName;}
-                <div class="col-10 nameOfUser"> @name  </div>
+            </div>
+
+            @{ var name = Model.UserFirstName + " " + Model.UserLastName;}
+            <div class="col-10 nameOfUser"> @name  </div>
         </div>
     </div>
 </div>
@@ -48,7 +48,7 @@
 
     <div class="offset-1 col-4 p-0">
         <div class="aboutpad col-12 m-0 p-0 pb-3">
-            <partial name="About.cshtml" model="@Model.AboutViewModel"/>
+            <partial name="About.cshtml" model="@Model.AboutViewModel" />
         </div>
 
         <div class="frnpad col-12 m-0 p-0 pb-3 mt-4" id="FriendsDiv">
@@ -62,21 +62,19 @@
                 <h6 class="col-12 p-2 pb-3 m-0">Create Post</h6>
                 <hr class="m-0 mb-3">
 
-                <form method="post" action="../Profile/Profile">
-                    <textarea id="createPostArea" cols="30" rows="10"  placeholder="What is In Your Mind ?" name="newPost"></textarea>
+                <form id="form_post" data-profile-pic="@ProfilePicture" data-user-name="@name" data-user-id="@Model.Id">
+                    <textarea id="createPostArea" cols="30" rows="10" placeholder="What is In Your Mind ?" name="newPost"></textarea>
                     <hr>
                     <div class="row p-0 m-0 h-100">
                         <div class="col-6 p-0">
                             <label class="btn btn-default btn-file new_Btn mt-2 ml-5">
-                                Upload <input type="file" style="display: none;" name="ImageFile">
+                                Upload <input type="file" style="display: none;" name="ImageFile" id="inputImage">
                             </label>
                         </div>
                         <div class="col-6 p-0 h-100">
-                            <button type="submit" value="post" class="btn btn-Post mt-2 mr-5">Post</button>
+                            <button type="button" id="form_post_btn" value="post" class="btn btn-Post mt-2 mr-5">Post</button>
                         </div>
-                        @*<input id="html_btn" type='file' name="ImageFile" /><br>*@
 
-                        @*<input id="html_btn" type='file' /><br>*@
                     </div>
                 </form>
 
@@ -84,90 +82,168 @@
 
 
 
-            @foreach (var item in Model.Posts)
+            @foreach (var post in Model.Posts)
+            {
+                if (post.IsDeleted == false)
                 {
+                    <div class="createPost2 col-12 p-0 pb-1">
+                        <div class="row p-0 m-0">
+                            <img src=@ProfilePicture alt="" class="PrfilePic m-2">
+                            <div class="col-9 p-0">
+                                <div class="row p-0 m-0 mb-1">
+                                    <span class="ProfileName">@name</span><br>
+                                </div>
+                                <div class="row p-0 m-0">
+                                    @{TimeSpan time = DateTime.Now - post.PostDateTime;
+                                        if (time == TimeSpan.Zero)
+                                        {
+                                            <span class="PostTime">now</span>
+                                        }
+                                        else if (time < TimeSpan.FromHours(1))
+                                        {
+                                            <span class="PostTime">@time.Minutes min</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="PostTime">@time.Hours h</span>
+                                        }
+                                    }
+                                    <i class="fas fa-users ml-3 mt-1"></i>
+                                </div>
+                            </div>
+                            <div class="postOptions col-1 p-0 ml-2">
+                                <Select>
+                                    <option value=""></option>
+                                    <option value="@post.PostId">Remove Post</option>
+                                </Select>
+                            </div>
+                        </div>
 
-        <div class="createPost2 col-12 p-0 pb-1">
-            <div class="row p-0 m-0">
-                <img src=@ProfilePicture alt="" class="PrfilePic m-2">
-                <div class="col-9 p-0">
-                    <div class="row p-0 m-0 mb-1">
-                        <span class="ProfileName">@name</span><br>
+                        <div class="row p-0 m-0 mt-1">
+                            <p class="PostText col-12">
+                                @post.PostContent
+                                @{string path = "/Images/" + post.PostImage; }
+                                <img src=@path alt="" class="PostImg">
+
+                            </p>
+                            <hr class="col-11 m-0 p-0 ml-3" />
+                        </div>
+
+                        <div class="row p-0 m-0 mt-3">
+                            <div class="col-12">
+                                @*<a href="#" class="ListOfLikes">Sara Atef Liked This And 15 Other</a>*@
+                                <a href="#" class="ListOfLikes" data-toggle="modal" data-target="#myModal">
+                                    @if (post.Likes.Count == 0)
+                                    {
+                                        <span>0 Likes</span>
+                                    }
+                                    else if (post.Likes.Count == 1)
+                                    {
+                                        <span>@post.Likes.First().User.UserFirstName @post.Likes.First().User.UserLastName</span>
+                                    }
+                                    else
+                                    {
+                                        var likesCount = post.Likes.Count - 1;
+                                        <span>@post.Likes.First().User.UserFirstName @post.Likes.First().User.UserLastName and @likesCount</span>
+                                    }
+                                </a>
+
+                                <!-- The Modal (List OF Friends) -->
+                                <div class="modal" id="myModal">
+
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <!-- Modal body -->
+                                            <div class="modal-body">
+                                                <p>People Who Liked This Post</p>
+                                                @foreach (var like in post.Likes)
+                                                {
+                                                    <p>@like.User.UserFirstName @like.User.UserLastName</p>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--End Of Model (List OF Friends)-->
+
+                            </div>
+                            <hr class="col-11 ml-3 mt-3 p-0 m-0" />
+                        </div>
+
+                        <div class="ListOfPosts row p-0 m-0">
+                            <div class="Like col-6 pt-3 pb-3 LikeClass uniqueLike" data-id="@Model.Id" data-post-id="@post.PostId">
+                                @if (post.Likes.Where(l => l.IsLiked == true).Any(l => l.UserId == Model.Id))
+                                {<span class="row p-0 m-0 Like LikeClass classblue" style="color:blue">
+                                        <i class="far  fa-thumbs-up offset-4 col-1 p-0 mt-1 LikeClass"></i>
+                                        <span class="row p-0 m-0 Like LikeWord LikeClass">Like</span>
+                                    </span>
+
+                                }
+                                else
+                                {
+                                    <span class="row p-0 m-0 Like LikeClass" style="color:black">
+                                        <i class="far fa-thumbs-up offset-4 col-1 p-0 mt-1 LikeClass"></i>
+                                        <span class="row p-0 m-0 Like LikeWord LikeClass">Like</span>
+                                    </span>
+                                }
+
+                            </div>
+                            <div class="Comment col-6 pt-3 pb-3">
+                                <span class="row p-0 m-0">
+                                    <i class="far fa-comments offset-4 col-1 p-0 mt-1"></i>
+                                    <span class="col-2 p-0">Comment</span>
+                                </span>
+                            </div>
+                            <hr class="col-12 p-0 m-0">
+                        </div>
+
+                        <div class="Comments">
+                            @foreach (var comment in post.Comments)
+                            {
+                                @if (comment.IsDeleted == false)
+                                {
+                                    <div class="row p-0 m-0 mt-3 Commented" id="@comment.CommentId">
+                                        <div class="col-1">
+                                            <img src="@ProfilePicture" alt="" class="commentPic">
+                                        </div>
+
+                                        <div class="col-3 mt-1 commentedNameDiv">
+                                            <span class="commentedName">@name</span><br>
+                                        </div>
+
+                                        <div class="col-7 p-0 CommentText2Div ">
+                                            <span class="CommentText2">@comment.CommentContent</span>
+                                        </div>
+
+                                        @if (comment.UserId == Model.Id || post.UserId == Model.Id)
+                                        {
+
+                                            <Select class="RemoveCommentSelect col-1">
+                                                <option value=""></option>
+                                                <option value="@comment.CommentId" class="remove_Comment">Remove Comment</option>
+                                            </Select>
+                                        }
+
+
+                                    </div>
+
+
+                                }
+                            }
+                        </div>
+
+                        <div class="row p-0 m-0 mt-3">
+                            <div class="col-1">
+                                <img src=@ProfilePicture alt="" class="commentPic mt-1">
+                            </div>
+                            <div class="col-11 p-0">
+                                <textarea id="commentTextArea" placeholder="Type Your Comment Here" class="typeComment" data-prof-pic="@ProfilePicture" data-name="@name" data-id="@Model.Id" data-post-id="@post.PostId"></textarea>
+                            </div>
+                        </div>
                     </div>
-                    <div class="row p-0 m-0">
-                        @{TimeSpan time = DateTime.Now - item.PostDateTime;
-                            if (time == TimeSpan.Zero)
-                            {
-                                <span class="PostTime">now</span>
-                            }
-                            else if (time < TimeSpan.FromHours(1))
-                            {
-                                <span class="PostTime">@time.Minutes min</span>
-                            }
-                            else
-                            {
-                                <span class="PostTime">@time.Hours h</span>
-                            }
-                        }
-                        <i class="fas fa-users ml-3 mt-1"></i>
-                    </div>
-                </div>
-                <div class="postOptions col-1 p-0 ml-2">
-                    <Select>
-                        <option value=""></option>
-                        <option value="">Remove Post</option>
-                    </Select>
-                </div>
-            </div>
-
-            <div class="row p-0 m-0 mt-1">
-                <p class="PostText col-12">
-                    @item.PostContent
-                    @{string path = "/Images/" + item.PostImage; }
-                    <img src=@path alt="" class="PostImg">
-
-                </p>
-                <hr class="col-11 m-0 p-0 ml-3" />
-            </div>
-
-            <div class="row p-0 m-0 mt-3">
-                <div class="col-12">
-                    <a href="#" class="ListOfLikes">Sara Atef Liked This And 15 Other</a>
-                </div>
-                <hr class="col-11 ml-3 mt-3 p-0 m-0" />
-            </div>
-
-            <div class="row p-0 m-0">
-                <div class="Like col-6 pt-3 pb-3">
-                    <span class="row p-0 m-0">
-                        <i class="far fa-thumbs-up offset-4 col-1 p-0 mt-1"></i>
-                        <span class="col-2 p-0">Like</span>
-                    </span>
-                </div>
-                <div class="Comment col-6 pt-3 pb-3">
-                    <span class="row p-0 m-0">
-                        <i class="far fa-comments offset-4 col-1 p-0 mt-1"></i>
-                        <span class="col-2 p-0">Comment</span>
-                    </span>
-                </div>
-                <hr class="col-12 p-0 m-0">
-            </div>
-
-            <div class="row p-0 m-0 mt-3">
-                <div class="col-1">
-                    <img src=@ProfilePicture alt="" class="commentPic mt-1">
-                </div>
-                <div class="col-11 p-0">
-                    <textarea id="commentTextArea" placeholder="Type Your Comment Here" class="typeComment"></textarea>
-                </div>
-            </div>
-
-        </div>
-
                 }
-
+            }
         </div>
-
     </div>
 </div>
 

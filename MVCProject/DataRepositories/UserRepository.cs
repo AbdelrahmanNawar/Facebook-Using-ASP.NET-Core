@@ -29,6 +29,25 @@ namespace MVCProject.DataRepositories
                 throw e;
             }
         }
+        public void DeleteById(string id)
+        {
+            try
+            {
+                var user = context.Users.Find(id);
+                if (user == null)
+                    return;
+                user.IsDeleted = true;
+                context.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        public void Delete(User t)
+        {
+            throw new NotImplementedException();
+        }
 
         public void Insert(User t)
         {
