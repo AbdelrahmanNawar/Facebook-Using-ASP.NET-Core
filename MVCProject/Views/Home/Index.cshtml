@@ -12,7 +12,8 @@
 
 <div class="LeftSideBarSetting">
     <div id="" class="">
-        <img src="~/Images/prof.png" class="profpic" />
+        @{string ProfilePicture = "/Images/" + currentUser.UserPicture ?? "default.jpg"; }
+        <img src=@ProfilePicture class="profpic" />
         <span>Profile</span>
     </div>
 
@@ -78,7 +79,8 @@
             @if (post.IsDeleted == false)
             {
                 <div class="createPost2" id="@post.PostId">
-                    <img src="~/Images/prof.png" alt="" class="PrfilePic">
+               
+                    <img src=@ProfilePicture alt="" class="PrfilePic">
                     <span class="ProfileName">@post.User.UserFirstName @post.User.UserLastName</span><br>
                     @{
                         TimeSpan time = DateTime.Now - post.PostDateTime;
@@ -175,7 +177,7 @@
                     <div class="comments">
                         <div class="pComment">
                             <div class="CommingComment">
-                                <img src="~/Images/prof.png" alt="" class="commentPic">
+                                <img src=@ProfilePicture alt="" class="commentPic">
                                 <textarea name="" id="areaOfComment"
                                           placeholder="Type Your Comment Here"
                                           class="typeComment"
@@ -190,7 +192,7 @@
                             @if (comment.IsDeleted == false)
                             {
                                 <div class="commented" id="@comment.CommentId">
-                                    <img src="~/Images/prof.png" alt="" class="commentPic">
+                                    <img src=@ProfilePicture alt="" class="commentPic">
                                     <p class="commenttext">
                                         <span class="CommentedName">@comment.User.UserFirstName @comment.User.UserLastName</span><br>
                                         @if (comment.UserId == currentUser.Id || post.UserId == currentUser.Id)

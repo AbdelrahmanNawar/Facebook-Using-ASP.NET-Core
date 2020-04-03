@@ -6,6 +6,7 @@
 @*
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
+        @{string ProfilePicture = "/Images/" + currentUser.UserPicture ?? "default.jpg"; }
 
 
 <div class="Headerfriend row m-0 p-0">
@@ -34,7 +35,7 @@ else
         {
             <div class="row  p-0 m-0 mt-3">
                 <div class="col-2">
-                    <img src="~/Images/prof.png" class="rounded-circle w-100 h-100" />
+                    <img src="~/Images/default.jpg" class="rounded-circle w-100 h-100" />
                     @*<img src="@item.UserPicture" class="rounded-circle w-100 h-100" />*@
                 </div>
                 <div class="col-5">
@@ -67,7 +68,7 @@ else
         {
             <div class="row  p-0 m-0 mt-3">
                 <div class="col-2">
-                    <img src="~/Images/prof.png" class="rounded-circle w-100 h-100" />
+                    <img src="~/Images/default.jpg" class="rounded-circle w-100 h-100" />
                     @*<img src="@item.UserPicture" class="rounded-circle w-100 h-100" />*@
                 </div>
                 <div class="col-5 mt-2">

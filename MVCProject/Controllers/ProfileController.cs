@@ -184,7 +184,7 @@ namespace MVCProject.Controllers
             return View("Profile", GetCurrentUser());
         }
 
-        public IActionResult Friend_Profile(string id)
+         public IActionResult Friend_Profile(string id)
         {
             ViewBag.UserFriends = GetFriends();
             ViewBag.CurrentUser = GetCurrentUser();
@@ -198,9 +198,14 @@ namespace MVCProject.Controllers
             {
                 return NotFound();
             }
-
+            foreach (var p in user.Posts)
+            {
+                p.Likes = likeRepository.SelectAll().Where(x => x.PostId == p.PostId).ToList();
+                p.Comments = commentRepository.SelectAll().Where(x => x.PostId == p.PostId).ToList();
+            }
             return View(user);
         }
+
         public void AddFriend(string id)
         {
             if (id != null)

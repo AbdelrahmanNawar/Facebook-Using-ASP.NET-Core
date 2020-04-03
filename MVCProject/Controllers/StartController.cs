@@ -60,7 +60,8 @@ namespace MVCProject.Controllers
                     UserName = model.Email,
                     Email = model.Email,
                     UserBirthday = model.Birthday,
-                    UserGender = gender
+                    UserGender = gender,
+                    UserPicture = "default.jpg"
                 };
                 var result = await userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)

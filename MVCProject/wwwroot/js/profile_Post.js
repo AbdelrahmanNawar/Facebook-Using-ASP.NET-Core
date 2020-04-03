@@ -1,4 +1,8 @@
 ﻿$('.Posts').click(function (e) {
+    var x = window.location.href;
+    var linkList = x.split("/");
+    console.log(linkList);
+    var link = linkList[0] + "//" + linkList[2] + "/Profile/Like";
 
     if (e.target.classList.contains("LikeClass")) {
         var parent = e.target;
@@ -13,7 +17,7 @@
 
         $.ajax({
             type: "POST",
-            url: "../Profile/Like",
+            url: link,
             data: {
                 "UserId": _userID,
                 "PostId": _postID
@@ -21,13 +25,27 @@
 
             dataType: "text",
             success: function (msg) {
+                var color = parent.childNodes[1].style.color;
+
+                if (color == "black") {
+                    parent.childNodes[1].style.color = "blue";
+                } else {
+                    parent.childNodes[1].style.color = "black";
+                }
                 var color = parent.childNodes[0].style.color;
 
                 if (color == "black") {
-                   parent.childNodes[0].style.color = "blue";
+                    parent.childNodes[0].style.color = "blue";
                 } else {
                     parent.childNodes[0].style.color = "black";
                 }
+                //console.log(parent.childNodes)
+                //if (linkList[4] == "Friend_Profile") {
+                    
+                //}
+                //else {
+                    
+                //}
             },
             error: function (req, status, error) {
                 alert(error);
@@ -40,7 +58,10 @@
 
 $('.Posts').keydown(function (e) {
     
-
+    var x = window.location.href;
+    var linkList = x.split("/");
+    console.log(linkList);
+    var link = linkList[0] + "//" + linkList[2] + "/Profile/AddComment";
     if (e.target.classList.contains("typeComment")) {
         var _userID = e.target.getAttribute('data-id');
         var _postID = e.target.getAttribute('data-post-id');
@@ -49,7 +70,7 @@ $('.Posts').keydown(function (e) {
         if (e.keyCode == 13) {
             $.ajax({
                 type: "POST",
-                url: "../Profile/AddComment",
+                url: link,
                 data: {
                     "UserId": _userID,
                     "CommentContent": e.target.value,
@@ -153,7 +174,10 @@ $('.Posts').change(function (e) {
 
     }
     else if (e.target.classList.contains("RemoveCommentSelect")) {
-
+        var x = window.location.href;
+        var linkList = x.split("/");
+        console.log(linkList);
+        var link = linkList[0] + "//" + linkList[2] + "/Profile/RemoveComment";
         var target;
         for (var i = 0; i < e.target.childNodes.length; i++) {
             if (e.target.childNodes[i].tagName == "OPTION" && e.target.childNodes[i].innerHTML != "") {
@@ -163,7 +187,7 @@ $('.Posts').change(function (e) {
                 //console.log(_parent);
                 $.ajax({
                     type: "POST",
-                    url: "../Profile/RemoveComment",
+                    url: link,
                     data: {
                         "CommentId": id,
                     },

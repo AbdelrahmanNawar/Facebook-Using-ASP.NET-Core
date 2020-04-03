@@ -36,7 +36,9 @@
         <div class="connectionIcon">
             <div id="" class="profilearea">
                 <a asp-controller="Profile" asp-action="Profile" >
-                    <img src="~/Images/prof.png" class="profpic" />
+                    @{string ProfilePicture = "/Images/" + ViewBag.User.UserPicture ?? "default.jpg";
+                    <img src=@ProfilePicture class="profpic" />
+                        }
                     @*<img src="@ViewBag.User.UserPicture" class="profpic" />*@
                 </a>
             </div>

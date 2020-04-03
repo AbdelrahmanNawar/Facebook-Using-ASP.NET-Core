@@ -9,17 +9,12 @@
     <div class="cover col-lg-10 col-md-12 col-sm-12 col-xs-12">
         <div class="row" style="height: 97px;"></div>
         <div class="row">
-
             <div class="ProfilePicDiv col-3" style="z-index:1;">
-
                 @{string ProfilePicture = "/Images/" + Model.UserPicture ?? ""; }
                 <img class="ProfilePic img-thumbnail" src=@ProfilePicture>
-
             </div>
-
             @{ var name = Model.UserFirstName + " " + Model.UserLastName;}
             <div class="col-6 nameOfUser"> @name  </div>
-
         </div>
     </div>
 </div>
@@ -41,12 +36,9 @@
             </div>
         </div>
     </div>
-
 </div>
 
 <div class="row p-0 m-0 mt-3">
-
-
     <div class="offset-1 col-4 p-0">
         <div class="aboutpad col-12 m-0 p-0 pb-3">
             <partial name="AboutFriend.cshtml" model="@Model.AboutViewModel" />
@@ -55,7 +47,6 @@
         <div class="frnpad col-12 m-0 p-0 pb-3 mt-4" id="FriendsDiv">
             <partial name="Friends.cshtml" />
         </div>
-
     </div>
 
     <div class="Posts ml-3 p-0">
@@ -89,7 +80,6 @@
                                 <i class="fas fa-users ml-3 mt-1"></i>
                             </div>
                         </div>
-
                     </div>
 
                     <div class="row p-0 m-0 mt-1">
@@ -135,7 +125,8 @@
                         </div>
                         <hr class="col-12 p-0 m-0">
                     </div>
-
+                    @{var x = ViewBag.CurrentUser.UserFirstName + " " + ViewBag.CurrentUser.UserLastName;}
+                    @{ var y = "/Images/" + ViewBag.CurrentUser.UserPicture;}
                     <div class="Comments">
                         @foreach (var i in item.Comments)
                         {
@@ -143,11 +134,11 @@
                             {
                                 <div class="row p-0 m-0 mt-3 Commented" id="@i.CommentId">
                                     <div class="col-1">
-                                        <img src="@ProfilePicture" alt="" class="commentPic">
+                                        <img src="@y" alt="" class="commentPic">
                                     </div>
 
                                     <div class="col-3 mt-1 commentedNameDiv">
-                                        <span class="commentedName">@name</span><br>
+                                        <span class="commentedName">@x</span><br>
                                     </div>
 
                                     <div class="col-7 p-0 CommentText2Div ">
@@ -159,11 +150,11 @@
                     </div>
                     <div class="row p-0 m-0 mt-3">
                         <div class="col-1">
-                            <img src=@ProfilePicture alt="" class="commentPic mt-1">
+                            <img src=@y alt="" class="commentPic mt-1">
                         </div>
                         <div class="col-11 p-0">
-                            @{var x = ViewBag.CurrentUser.UserFirstName + ViewBag.CurrentUser.UserLastName;}
-                            <textarea id="commentTextArea" placeholder="Type Your Comment Here" class="typeComment" data-prof-pic="@ViewBag.CurrentUser.UserPicture" data-name="@x" data-id="@ViewBag.CurrentUser.Id" data-post-id="@item.PostId"></textarea>
+
+                            <textarea id="commentTextArea" placeholder="Type Your Comment Here" class="typeComment" data-prof-pic="@y" data-name="@x" data-id="@ViewBag.CurrentUser.Id" data-post-id="@item.PostId"></textarea>
                         </div>
                     </div>
                 </div>

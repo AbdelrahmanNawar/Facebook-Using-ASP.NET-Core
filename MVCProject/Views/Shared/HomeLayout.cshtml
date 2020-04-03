@@ -34,7 +34,9 @@
         <div class="connectionIcon">
             <div id="" class="profilearea">
                 <a href="#">
-                    <img src="~/Images/prof.png" class="profpic" />
+                    @{string ProfilePicture = "/Images/" + Model.User.UserPicture ?? "default.jpg"; }
+
+                    <img src=@ProfilePicture class="profpic" />
                 </a>
             </div>
             <div class="collectionOfNavICon">
@@ -73,7 +75,7 @@
             {
                 <div class="friendList">
                     <div class="frinedImg">
-                        <img src="~/Images/prof.png" alt="">
+                        <img src=@ProfilePicture alt="">
                     </div>
                     <div class="friendName">@item.UserFirstName  @item.UserLastName</div>
                 </div>

@@ -12,7 +12,14 @@
 
             <div class="ProfilePicDiv col-3" style="z-index:1;">
 
-                @{string ProfilePicture = "/Images/" + Model.UserPicture ?? ""; }
+                @{
+                    string ProfilePicture;
+                    if (Model.UserPicture == null)
+
+                        ProfilePicture = "~/Images/default.jpg";
+                    else
+                        ProfilePicture = "/Images/" + Model.UserPicture;
+                }
                 <img class="ProfilePic img-thumbnail" src=@ProfilePicture>
 
             </div>
